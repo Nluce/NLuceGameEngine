@@ -148,9 +148,8 @@ int main()
 		{
 			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
 			sprite1.setRotation(time);
-			sprite2.setRotation(-time);
+			sprite2.setRotation(time * 2);
 		}
-
 
 
 		//draw code goes here
@@ -165,10 +164,8 @@ int main()
 
 			tex.bind();
 
-
 			sprite1.draw(ortho, shaderIDMVP);
 			sprite2.draw(ortho, shaderIDMVP);
-
 
 			//swap front and back buffers
 			glfwSwapBuffers(window);
