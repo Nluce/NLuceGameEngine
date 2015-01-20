@@ -15,6 +15,8 @@ class Shape
 	vec2 size;
 	vec2 center;
 
+	// add a Texture pointer to Shape
+
 public:
 	Shape();
 	~Shape();
