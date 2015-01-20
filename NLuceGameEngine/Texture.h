@@ -40,6 +40,8 @@ public:
 		}
 	}
 
+
+	// Binds this texture to the OpenGL 2d texture unit.
 	void bind()
 	{
 		glBindTexture(GL_TEXTURE_2D, id);
