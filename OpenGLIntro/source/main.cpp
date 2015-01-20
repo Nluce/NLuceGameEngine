@@ -70,7 +70,7 @@ int main()
 	myShape[2].fPositions[1] = -25;
 
 	myShape[3].fPositions[0] = 25;
-	myShape[3].fPositions[1] = -25;
+	myShape[3].fPositions[1] = -25 ;
 
 
 	//set up the UVs
