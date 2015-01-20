@@ -60,7 +60,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutiondDir)NLuceGameEngine\;$(ProjectDir)include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)libs\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -68,7 +68,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Nuke\Documents\GitHub\NLuceGameEngine\NLuceGameEngine;C:\Users\Nuke\Documents\GitHub\NLuceGameEngine\NLuceGameEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Nuke\Documents\GitHub\NLuceGameEngine\NLuceGameEngine;C:\Users\navarre.luce\Documents\GitHub\NLuceGameEngine\NLuceGameEngine;C:\Users\Nuke\Documents\GitHub\NLuceGameEngine\NLuceGameEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

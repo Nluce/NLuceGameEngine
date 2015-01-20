@@ -101,7 +101,7 @@ int main()
 	}
 
 	playerShape.setVerts(myShape, 4);
-
+	playerShape.setTexture(&tex);
 	//create shader program
 //	GLuint uiProgramFlat = CreateProgram("VertexPositionColorUV.glsl.glsl", "FlatFragmentShader.glsl");
 	GLuint uiProgramColorTexture = CreateProgram("VertexPositionColorUV.glsl", "TexturedFragmentShader.glsl");
@@ -154,15 +154,13 @@ int main()
 
 		//draw code goes here
 		{
-			glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 
 			//enable shaders
 			glUseProgram(uiProgramColorTexture);
 			//glUseProgram(uiProgramFlat);
-
-			tex.bind();
 
 			sprite1.draw(ortho, shaderIDMVP);
 			sprite2.draw(ortho, shaderIDMVP);

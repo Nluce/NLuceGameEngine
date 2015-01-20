@@ -5,6 +5,7 @@
 #include "GLFW\glfw3.h"
 #include "glm/glm.hpp"
 #include "Vertex.h"
+#include "Texture.h"
 using namespace glm;
 
 class Shape
@@ -14,13 +15,17 @@ class Shape
 	GLuint uiVBO;
 	vec2 size;
 	vec2 center;
-
+	Texture* texture;
+	
 	// add a Texture pointer to Shape
 
 public:
 	Shape();
 	~Shape();
-	
+	void setTexture(Texture * newTexture)
+	{
+		texture = newTexture;
+	}
 
 	void setVerts(Vertex* newVerts, int numberOfVertices)
 	{
@@ -51,6 +56,10 @@ public:
 	{
 		if (uiVBO != 0)
 		{
+			if (texture)
+			{
+				texture->bind();
+			}
 			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 
 			//enable the vertex array states
