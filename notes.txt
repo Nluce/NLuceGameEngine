@@ -1,0 +1,36 @@
+//ENGINE\\
+
+sprite sheets
+
+Frame Independant movement
+
+Enemy Movement
+
+Text output(Use font sheet and UV cords with quads)
+
+
+
+
+
+
+
+
+//GAME\\
+
+castlevania style
+
+
+enemies
+
+sword
+
+health bar
+
+score
+
+jumping
+
+simple platforming
+
+background
+
