@@ -8,6 +8,7 @@
 #include <iostream>
 #include <time.h>
 #include "Texture.h"
+#include "Sprite.h"
 
 using namespace std;
 
@@ -107,7 +108,7 @@ int main()
 //	GLuint uiProgramTexture = CreateProgram("VertexPositionUV.glsl", "FragmentPositionUV.glsl");
 
 	//find the position of the matrix variable in the shader so we can send info there later
-	GLuint MatrixIDFlat = glGetUniformLocation(uiProgramColorTexture, "MVP");
+	GLuint shaderIDMVP = glGetUniformLocation(uiProgramColorTexture, "MVP");
 
 	glm::mat4 ortho = glm::ortho(0.0f, (float)SCREEN_WIDTH, 0.0f, (float)SCREEN_HEIGHT);
 
@@ -127,57 +128,52 @@ int main()
 
 	glm::vec3 zAxis(0, 0, 1);
 
+	float centerX = SCREEN_WIDTH / 2;
+	float centerY = SCREEN_HEIGHT / 2;
+
+	Sprite sprite1;
+	sprite1.setShape(&playerShape);
+	sprite1.setPosition(vec2(centerX + 50, centerY));
+
+	Sprite sprite2;
+	sprite2.setShape(&playerShape);
+	sprite2.setPosition(vec2(centerX - 50, centerY));
+
+
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
-		float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
-		float f = time * 1.5;
+
+		// game physics
+		{
+			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
+			sprite1.setRotation(time);
+			sprite2.setRotation(-time);
+		}
+
+
 
 		//draw code goes here
-		glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-
-		//enable shaders
-		glUseProgram(uiProgramColorTexture);
-		//glUseProgram(uiProgramFlat);
-
-		tex.bind();
-
 		{
-			// first we need to rotate the model
-			glm::mat4 rotationMatrix = glm::rotate(glm::mat4(), f, zAxis);
+			glClearColor(0.0f, 0.0f, 0.5f, 0.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
 
-			// then we move it to where we want it centered on the screen
-			glm::mat4 translationMatrix = glm::translate(glm::mat4(), vec3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
 
-			// then we apply the orthographic projection to put it into opengl coordinates
-			glm::mat4 mvp = ortho * translationMatrix * rotationMatrix;
+			//enable shaders
+			glUseProgram(uiProgramColorTexture);
+			//glUseProgram(uiProgramFlat);
 
-			//send our mvp matrix to the shader
-			glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, &mvp[0][0]);
+			tex.bind();
+
+
+			sprite1.draw(ortho, shaderIDMVP);
+			sprite2.draw(ortho, shaderIDMVP);
+
+
+			//swap front and back buffers
+			glfwSwapBuffers(window);
 		}
 
-		playerShape.draw();
-
-		{
-			// first we need to rotate the model
-			glm::mat4 rotationMatrix = glm::rotate(glm::mat4(), -f, zAxis);
-
-			// then we move it to where we want it centered on the screen
-			glm::mat4 translationMatrix = glm::translate(glm::mat4(), vec3(SCREEN_WIDTH / 2 + 100, SCREEN_HEIGHT / 2, 0.0f));
-
-			// then we apply the orthographic projection to put it into opengl coordinates
-			glm::mat4 mvp = ortho * translationMatrix * rotationMatrix;
-
-			//send our mvp matrix to the shader
-			glUniformMatrix4fv(MatrixIDFlat, 1, GL_FALSE, &mvp[0][0]);
-		}
-
-		playerShape.draw();
-
-		//swap front and back buffers
-		glfwSwapBuffers(window);
 
 		//poll for and process events
 		glfwPollEvents();
