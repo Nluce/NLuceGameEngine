@@ -10,6 +10,8 @@
 class Texture
 {
 	int id;
+	int height;
+	int width;
 public:
 	Texture() : id(0) {}
 	~Texture(){}
@@ -38,7 +40,12 @@ public:
 				std::cerr << "SOIL loading error: " << SOIL_last_result() << std::endl;
 			}
 		}
+		int w, h;
+		int miplevel = 0;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, & w);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, & h);
 	}
+
 
 
 	// Binds this texture to the OpenGL 2d texture unit.

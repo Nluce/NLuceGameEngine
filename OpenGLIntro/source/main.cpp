@@ -117,7 +117,7 @@ int main()
 			cout << x << ", " << y << " = " << ortho[x][y] << endl;
 		}
 	}
-
+	
 
 	// try to set up blending so that the texture can have treanspeanancy...
 	// not currently working???
