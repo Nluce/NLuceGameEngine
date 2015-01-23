@@ -14,7 +14,9 @@ using namespace std;
 
 // using GLM for matrix and vector classes
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 
 const int SCREEN_HEIGHT = 480;
