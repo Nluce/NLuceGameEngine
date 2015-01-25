@@ -21,6 +21,15 @@ GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_WIDTH = 640;
+
+float CalculateU(char c)
+{
+	int column = c % 16;
+	int left = column * 8;
+	float U = (float) left / 128;
+	return U;
+}
+
 int main()
 {
 	//Initialise GLFW
