@@ -21,6 +21,10 @@
     <None Include="VertexPositionUV.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\NLuceGameEngine\fonts\arcade-font-writer.png" />
+    <Image Include="..\NLuceGameEngine\fonts\batsugun.png" />
+    <Image Include="..\NLuceGameEngine\fonts\font.png" />
+    <Image Include="..\NLuceGameEngine\fonts\namco.png" />
     <Image Include="invadersfont.png" />
     <Image Include="texture.png" />
   </ItemGroup>

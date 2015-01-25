@@ -4,12 +4,21 @@
 #include "GLFW\glfw3.h"
 #include "glm/glm.hpp"
 
+#include "Texture.h"
+
 using namespace glm;
 class Text
 {
+	Texture * texture;
 public:
-	Text();
-	~Text();
-	void getFont();
+	Text(const char * textureFileName)
+	{
+		texture = new Texture();
+		texture->load(textureFileName);
+	}
+
+	~Text(){
+		delete texture;
+	}
 };
 

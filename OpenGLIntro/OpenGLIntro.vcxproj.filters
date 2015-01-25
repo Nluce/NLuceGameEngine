@@ -50,6 +50,18 @@
     <Image Include="invadersfont.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\NLuceGameEngine\fonts\arcade-font-writer.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\NLuceGameEngine\fonts\batsugun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\NLuceGameEngine\fonts\font.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\NLuceGameEngine\fonts\namco.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Debug\NLuceGameEngine.lib">

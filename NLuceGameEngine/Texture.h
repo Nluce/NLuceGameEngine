@@ -40,10 +40,32 @@ public:
 				std::cerr << "SOIL loading error: " << SOIL_last_result() << std::endl;
 			}
 		}
-		int w, h;
+
 		int miplevel = 0;
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, & w);
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, & h);
+		bind();
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &width);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &height);
+	}
+
+	void load(const char* a_pFilename)
+	{
+		//check file exists
+		if (a_pFilename != nullptr)
+		{
+
+			id = SOIL_load_OGL_texture(a_pFilename, SOIL_LOAD_RGBA, 0, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS);
+
+			//check for errors
+			if (id == 0)
+			{
+				std::cerr << "SOIL loading error: " << SOIL_last_result() << std::endl;
+			}
+		}
+
+		int miplevel = 0;
+		bind();
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &width);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &height);
 	}
 
 
