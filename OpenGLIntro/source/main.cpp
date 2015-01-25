@@ -67,8 +67,6 @@ int main()
 
 	Shape playerShape;
 
-
-
 	//create some vertices
 	Vertex* myShape = new Vertex[4];
 	myShape[0].fPositions[0] = 25;
