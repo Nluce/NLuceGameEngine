@@ -14,8 +14,22 @@ class Texture
 	int width;
 public:
 	Texture() : id(0) {}
-	~Texture(){}
 
+	Texture(const char * fileName)
+	{
+		load(fileName);
+	}
+
+	~Texture(){}
+	int getWidth()
+	{
+		return width;
+	}
+
+	int getHeight()
+	{
+		return height;
+	}
 	void load(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP)
 	{
 		//check file exists
@@ -53,7 +67,7 @@ public:
 		if (a_pFilename != nullptr)
 		{
 
-			id = SOIL_load_OGL_texture(a_pFilename, SOIL_LOAD_RGBA, 0, SOIL_FLAG_MIPMAPS | SOIL_FLAG_TEXTURE_REPEATS);
+			id = SOIL_load_OGL_texture(a_pFilename, SOIL_LOAD_RGBA, 0, 0);
 
 			//check for errors
 			if (id == 0)
@@ -68,6 +82,13 @@ public:
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &height);
 	}
 
+
+	void filterNearest()
+	{
+		bind();
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,			GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,			GL_NEAREST);
+	}
 
 
 	// Binds this texture to the OpenGL 2d texture unit.

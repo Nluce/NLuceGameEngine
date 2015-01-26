@@ -8,6 +8,7 @@
 #include <iostream>
 #include <time.h>
 #include "Texture.h"
+#include "Text.h"
 #include "Sprite.h"
 
 using namespace std;
@@ -22,13 +23,7 @@ GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_WIDTH = 640;
 
-float CalculateU(char c)
-{
-	int column = c % 16;
-	int left = column * 8;
-	float U = (float) left / 128;
-	return U;
-}
+
 
 int main()
 {
@@ -64,53 +59,11 @@ int main()
 	int width = 200, height = 200, bpp = 4;
 	Texture tex;
 	tex.load("texture.png", width, height, bpp);
+	Shape playerShape = Shape(&tex);
 
-	Shape playerShape;
-
-	//create some vertices
-	Vertex* myShape = new Vertex[4];
-	myShape[0].fPositions[0] = 25;
-	myShape[0].fPositions[1] = 25;
-
-	myShape[1].fPositions[0] = -25;
-	myShape[1].fPositions[1] = 25;
-	
-	myShape[2].fPositions[0] = -25;
-	myShape[2].fPositions[1] = -25;
-
-	myShape[3].fPositions[0] = 25;
-	myShape[3].fPositions[1] = -25 ;
+	Text font = Text("../NLuceGameEngine/fonts/batsugun.png");
 
 
-	//set up the UVs
-	myShape[0].fUVs[0] = 1; //top right
-	myShape[0].fUVs[1] = 1;
-	myShape[1].fUVs[0] = 0; //top left
-	myShape[1].fUVs[1] = 1;
-	myShape[2].fUVs[0] = 0; //bottom left
-	myShape[2].fUVs[1] = 0;
-	myShape[3].fUVs[0] = 1; //bottom right
-	myShape[3].fUVs[1] = 0;
-
-	const float SCALE = 2;
-
-	for (int i = 0; i < 4; i++)
-	{
-		myShape[i].fPositions[0] *= SCALE;
-
-		myShape[i].fPositions[1] *= SCALE;
-
-		myShape[i].fPositions[2] = 0.0f;
-		myShape[i].fPositions[3] = 1.0f;
-
-		myShape[i].fColours[0] = 1.0f;
-		myShape[i].fColours[1] = 1.0f;
-		myShape[i].fColours[2] = 1.0f;
-		myShape[i].fColours[3] = 1.0f;
-	}
-
-	playerShape.setVerts(myShape, 4);
-	playerShape.setTexture(&tex);
 	//create shader program
 //	GLuint uiProgramFlat = CreateProgram("VertexPositionColorUV.glsl.glsl", "FlatFragmentShader.glsl");
 	GLuint uiProgramColorTexture = CreateProgram("VertexPositionColorUV.glsl", "TexturedFragmentShader.glsl");
@@ -156,16 +109,15 @@ int main()
 		// game physics
 		{
 			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
-			sprite1.setRotation(time);
+			sprite1.setRotation(0);
 			sprite2.setRotation(time * 2);
 		}
 
 
 		//draw code goes here
 		{
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			glClearColor(0.0f, 0.0f, 0.2f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
-
 
 			//enable shaders
 			glUseProgram(uiProgramColorTexture);
@@ -173,6 +125,10 @@ int main()
 
 			sprite1.draw(ortho, shaderIDMVP);
 			sprite2.draw(ortho, shaderIDMVP);
+
+
+
+			font.drawString(ortho, shaderIDMVP, "HIGH SCORE 10000", 50, 150);
 
 			//swap front and back buffers
 			glfwSwapBuffers(window);
