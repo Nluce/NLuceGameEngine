@@ -9,12 +9,26 @@
 using namespace glm;
 
 
-enum ShapeAlignment {
-	CENTER,
-	BOTTOM_CENTER,
-	BOTTOM_LEFT,
-	TOP_LEFT,
+class ShapeAlignment
+{
+public:
+	float x;
+	float y;
+	ShapeAlignment(float x, float y) :x(x), y(y) {}
+
 };
+
+extern ShapeAlignment CENTER_LEFT;
+extern ShapeAlignment CENTER;
+extern ShapeAlignment CENTER_RIGHT;
+
+extern ShapeAlignment BOTTOM_LEFT;
+extern ShapeAlignment BOTTOM_CENTER;
+extern ShapeAlignment BOTTOM_RIGHT;
+
+extern ShapeAlignment TOP_LEFT;
+extern ShapeAlignment TOP_CENTER;
+extern ShapeAlignment TOP_RIGHT;
 
 class Shape
 {
@@ -25,37 +39,12 @@ class Shape
 	vec2 center;
 	Texture* texture;
 	
-	float horzontalAlignment(ShapeAlignment a)
-	{
-		switch (a){
-		default:
-		case CENTER:
-			return 0.5f;
-		case BOTTOM_LEFT:
-		case BOTTOM_CENTER:
-			return 0.0f;
-		case TOP_LEFT:
-			return 1.0f;
-		}
-	}
 
-	float verticalAlignment(ShapeAlignment a)
-	{
-		switch (a){
-		default:
-		case CENTER:
-		case BOTTOM_CENTER:
-			return 0.5f;
-		case BOTTOM_LEFT:
-		case TOP_LEFT:
-			return 0.0f;
-		}
-	}
 
 	void setVertexPositions(ShapeAlignment alignment, float width, float height)
 	{
-		float ha = horzontalAlignment(alignment);
-		float va = verticalAlignment(alignment);
+		float ha = alignment.x;
+		float va = alignment.y;
 
 		float left = -ha * width;
 		float right = left + width;
@@ -122,13 +111,8 @@ public:
 			//bind VBO
 			glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 			//allocate space for vertices on the graphics card
-			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numberOfVerticies, NULL, GL_STATIC_DRAW);
-			//get pointer to allocated space on the graphics card
-			GLvoid* vBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-			//copy data to graphics card
-			memcpy(vBuffer, vertices, sizeof(Vertex) * numberOfVerticies);
-			//unmap and unbind buffer
-			glUnmapBuffer(GL_ARRAY_BUFFER);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numberOfVerticies, vertices, GL_STATIC_DRAW);
+			// unbind the vbo
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 	}
@@ -156,14 +140,7 @@ public:
 		vertices[3].fUVs[0] = 0; // left top
 		vertices[3].fUVs[1] = 1;
 
-
-		for (int i = 0; i < 4; i++)
-		{
-			vertices[i].fColours[0] = 1.0f;
-			vertices[i].fColours[1] = 1.0f;
-			vertices[i].fColours[2] = 1.0f;
-			vertices[i].fColours[3] = 1.0f;
-		}
+		setVertexColorsToWhite();
 
 		registerVertexBufferObject();
 	}
@@ -174,7 +151,7 @@ public:
 	// left, top, width and height are pixel coordinates (not UV, UV will be calculated) in the texture.
 	// they indicate the portion of the texture to use for the shape
 	// since these are texture pixel coordinates the origin is at the top left
-	Shape(Texture * newTexture, int left, int top, int width, int height, ShapeAlignment alignment = BOTTOM_LEFT)
+	Shape(Texture * newTexture, int left, int top, int width, int height, ShapeAlignment alignment = CENTER)
 	{
 		texture = newTexture;
 		int h = texture->getHeight();

@@ -59,9 +59,15 @@ int main()
 	int width = 200, height = 200, bpp = 4;
 	Texture tex;
 	tex.load("texture.png", width, height, bpp);
-	Shape playerShape = Shape(&tex);
+	Shape playerShape = Shape(&tex, CENTER);
 
-	Text font = Text("../NLuceGameEngine/fonts/batsugun.png");
+	Text font = Text("../NLuceGameEngine/fonts/font.png");
+
+	Texture contraSpriteSheet("ContraSprites.png");
+	contraSpriteSheet.filterNearest();
+
+	Shape contraRunFrame1(&contraSpriteSheet, 0, 5, 19, 36, BOTTOM_CENTER);
+	Shape contraRunFrame2(&contraSpriteSheet, 37, 4, 24, 37, BOTTOM_CENTER);
 
 
 	//create shader program
@@ -79,10 +85,8 @@ int main()
 			cout << x << ", " << y << " = " << ortho[x][y] << endl;
 		}
 	}
-	
 
-	// try to set up blending so that the texture can have treanspeanancy...
-	// not currently working???
+	// set up blending so that the texture can have treanspeanancy...
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -102,17 +106,38 @@ int main()
 	sprite2.setPosition(vec2(centerX - 50, centerY));
 
 
+	Sprite contraDude;
+	contraDude.setShape(&contraRunFrame1);
+	contraDude.setPosition(vec2(50, 50));
+
+
+	int highScore = 0;
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
 
 		// game physics
 		{
-			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
-			sprite1.setRotation(0);
-			sprite2.setRotation(time * 2);
-		}
+			highScore += 10;
 
+			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
+			sprite1.setRotation(-time / 10);
+			sprite2.setRotation(time / 5 );
+
+			int numberOfFrames = 2;
+			int animationSpeedInFramesPerSecond = 2;
+			int frame = int(time * animationSpeedInFramesPerSecond) % numberOfFrames;
+
+			switch (frame)
+			{
+			case 0:
+				contraDude.setShape(&contraRunFrame1);
+				break;
+			case 1:
+				contraDude.setShape(&contraRunFrame2);
+				break;
+			}
+		}
 
 		//draw code goes here
 		{
@@ -126,9 +151,13 @@ int main()
 			sprite1.draw(ortho, shaderIDMVP);
 			sprite2.draw(ortho, shaderIDMVP);
 
+			contraDude.draw(ortho, shaderIDMVP);
 
+			char buffer[200];
 
-			font.drawString(ortho, shaderIDMVP, "HIGH SCORE 10000", 50, 150);
+			sprintf_s(buffer, "HIGH SCORE %d", highScore);
+
+			font.drawString(ortho, shaderIDMVP, buffer, 50, 150);
 
 			//swap front and back buffers
 			glfwSwapBuffers(window);

@@ -25,6 +25,7 @@
     <Image Include="..\NLuceGameEngine\fonts\batsugun.png" />
     <Image Include="..\NLuceGameEngine\fonts\font.png" />
     <Image Include="..\NLuceGameEngine\fonts\namco.png" />
+    <Image Include="ContraSprites.png" />
     <Image Include="invadersfont.png" />
     <Image Include="texture.png" />
   </ItemGroup>

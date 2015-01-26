@@ -52,83 +52,25 @@ public:
 private:
 	int calculateLeft(char c)
 	{
-		int column = c % charsPerRow;
+		int column = (c - firstChar) % charsPerRow;
 		int left = column * charWidth;
 		return left;
 	}
 
-	int calculateRight(char c)
-	{
-		return calculateLeft(c) + charWidth;
-	}
-
-	float calculateU(int x)
-	{
-		float U = (float)x / texture->getWidth();
-		return U;
-	}
 
 	int calculateTop(char c)
 	{
-		return (c - firstChar) / charsPerRow * charHeight;
-	}
-
-	int calculateBottom(char c)
-	{
-		return calculateTop(c) + charHeight;
-	}
-
-	float calculateV(int y)
-	{
-		return (float)y / texture->getHeight();
+		int row = (c - firstChar) / charsPerRow;
+		int top = row * charHeight;
+		return top;
 	}
 
 	Shape* makeShape(char c)
 	{
-		Vertex v[4];
-		v[0].fPositions[0] = 0;
-		v[0].fPositions[1] = 0;
-		v[0].fPositions[2] = 0;
-		v[0].fPositions[3] = 1;
+		int left = calculateLeft(c);
+		int top = calculateTop(c);
 
-		v[1].fPositions[0] = charWidth;
-		v[1].fPositions[1] = 0;
-		v[1].fPositions[2] = 0;
-		v[1].fPositions[3] = 1;
-
-		v[2].fPositions[0] = charWidth;
-		v[2].fPositions[1] = charHeight;
-		v[2].fPositions[2] = 0;
-		v[2].fPositions[3] = 1;
-
-		v[3].fPositions[0] = 0;
-		v[3].fPositions[1] = charHeight;
-		v[3].fPositions[2] = 0;
-		v[3].fPositions[3] = 1;
-		
-		for (int i = 0; i < 4; i++)
-		{
-			for (int j = 0; j < 4; j++)
-			{
-				v[i].fColours[j] = 1;
-			}
-		}
-
-		v[0].fUVs[0] = calculateU(calculateLeft(c));
-		v[0].fUVs[1] = calculateV(calculateBottom(c));
-
-		v[1].fUVs[0] = calculateU(calculateRight(c));
-		v[1].fUVs[1] = calculateV(calculateBottom(c));
-
-		v[2].fUVs[0] = calculateU(calculateRight(c));
-		v[2].fUVs[1] = calculateV(calculateTop(c));
-
-		v[3].fUVs[0] = calculateU(calculateLeft(c));
-		v[3].fUVs[1] = calculateV(calculateTop(c));
-
-		Shape * shape = new Shape();
-		shape->setVerts(v, 4);
-		shape->setTexture(texture);
+		Shape * shape = new Shape(texture, left, top, charWidth, charHeight, BOTTOM_LEFT);
 		return shape;
 	}
 public:
@@ -156,11 +98,14 @@ public:
 			return;
 		}
 
+		// look to see if the shape is in the list
 		Shape*shape = charList[c - firstChar];
 
 		if (shape == 0)
 		{
+			// no shape for this char...  make the shape
 			shape = makeShape(c);
+			// and add it to the list
 			charList[c - firstChar] = shape;
 		}
 
@@ -169,13 +114,13 @@ public:
 
 		{
 			// first we need to rotate the model
-			glm::mat4 rotationMatrix = glm::scale(glm::mat4(), vec3(scale, scale, 1.0f));
+			glm::mat4 scaleMatrix = glm::scale(glm::mat4(), vec3(scale, scale, 1.0f));
 
 			// then we move it to where we want it centered on the screen
 			glm::mat4 translationMatrix = glm::translate(glm::mat4(), vec3(x, y, 0.0f));
 
 			// then we apply the orthographic matrixIn to put it into opengl coordinates
-			glm::mat4 mvp = matrixIn *  rotationMatrix * translationMatrix;
+			glm::mat4 mvp = matrixIn *  scaleMatrix * translationMatrix;
 
 			//send our mvp matrix to the shader
 			glUniformMatrix4fv(matrixUniformID, 1, GL_FALSE, &mvp[0][0]);
