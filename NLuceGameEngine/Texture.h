@@ -67,7 +67,7 @@ public:
 		if (a_pFilename != nullptr)
 		{
 
-			id = SOIL_load_OGL_texture(a_pFilename, SOIL_LOAD_RGBA, 0, 0);
+			id = SOIL_load_OGL_texture(a_pFilename, SOIL_LOAD_RGBA, 0, SOIL_FLAG_INVERT_Y);
 
 			//check for errors
 			if (id == 0)

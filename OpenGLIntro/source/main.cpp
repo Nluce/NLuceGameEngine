@@ -24,7 +24,6 @@ const int SCREEN_HEIGHT = 480;
 const int SCREEN_WIDTH = 640;
 
 
-
 int main()
 {
 	//Initialise GLFW
@@ -64,10 +63,25 @@ int main()
 	Text font = Text("../NLuceGameEngine/fonts/font.png");
 
 	Texture contraSpriteSheet("ContraSprites.png");
-	contraSpriteSheet.filterNearest();
+	Texture backgroundTexture("Level.png");
 
-	Shape contraRunFrame1(&contraSpriteSheet, 0, 5, 19, 36, BOTTOM_CENTER);
-	Shape contraRunFrame2(&contraSpriteSheet, 37, 4, 24, 37, BOTTOM_CENTER);
+	contraSpriteSheet.filterNearest();
+	Shape background(&backgroundTexture,BOTTOM_LEFT);
+
+	Shape contraRunFrame1(&contraSpriteSheet, 0, 6, 19, 36, BOTTOM_CENTER);
+	Shape contraRunFrame2(&contraSpriteSheet, 37, 6, 24, 37, BOTTOM_CENTER);
+	Shape contraRunFrame3(&contraSpriteSheet, 77, 6, 24, 37, BOTTOM_CENTER);
+	Shape contraRunFrame4(&contraSpriteSheet, 115, 6, 24, 37, BOTTOM_CENTER);
+	Shape contraRunFrame5(&contraSpriteSheet, 157, 6, 24, 37, BOTTOM_CENTER);
+
+	Shape contraStandFrame(&contraSpriteSheet, 196, 6, 24, 37, BOTTOM_CENTER);
+
+	Shape contraLaydownFrame(&contraSpriteSheet, 270, 6, 24, 37, BOTTOM_CENTER);
+
+	Shape contraJumpFrame1(&contraSpriteSheet, 0, 51, 24, 24, BOTTOM_CENTER);
+	Shape contraJumpFrame2(&contraSpriteSheet, 41, 51, 24, 24, BOTTOM_CENTER);
+	Shape contraJumpFrame3(&contraSpriteSheet, 80, 51, 24, 24, BOTTOM_CENTER);
+	Shape contraJumpFrame4(&contraSpriteSheet, 120, 51, 24, 24, BOTTOM_CENTER);
 
 
 	//create shader program
@@ -110,6 +124,13 @@ int main()
 	contraDude.setShape(&contraRunFrame1);
 	contraDude.setPosition(vec2(50, 50));
 
+	Sprite contraDudeJump;
+	contraDudeJump.setShape(&contraJumpFrame1);
+	contraDudeJump.setPosition(vec2(100, 50));
+
+	Sprite backgroundSprite;
+	backgroundSprite.setShape(&background);
+	backgroundSprite.setPosition(vec2(0, 0));
 
 	int highScore = 0;
 	//loop until the user closes the window
@@ -123,12 +144,22 @@ int main()
 			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
 			sprite1.setRotation(-time / 10);
 			sprite2.setRotation(time / 5 );
-
-			int numberOfFrames = 2;
+						
+			int numberOfRunFrames = 5;
+			int numberOfJumpFrames = 4;
 			int animationSpeedInFramesPerSecond = 2;
-			int frame = int(time * animationSpeedInFramesPerSecond) % numberOfFrames;
 
-			switch (frame)
+			int state = glfwGetKey(window, GLFW_KEY_E);
+			if (state == GLFW_PRESS)
+			{
+				animationSpeedInFramesPerSecond = 8;
+			}
+			int runFrame = int(time * animationSpeedInFramesPerSecond) % numberOfRunFrames;
+			int JumpFrame = int(time * animationSpeedInFramesPerSecond) % numberOfJumpFrames;
+			
+			
+			
+			switch (runFrame)
 			{
 			case 0:
 				contraDude.setShape(&contraRunFrame1);
@@ -136,22 +167,49 @@ int main()
 			case 1:
 				contraDude.setShape(&contraRunFrame2);
 				break;
+			case 2:
+				contraDude.setShape(&contraRunFrame3);
+				break;
+			case 3:
+				contraDude.setShape(&contraRunFrame4);
+				break;
+			case 4:
+				contraDude.setShape(&contraRunFrame5);
+				break;
+			}
+			switch (JumpFrame)
+			{
+			case 0:
+				contraDudeJump.setShape(&contraJumpFrame1);
+				break;
+			case 1:
+				contraDudeJump.setShape(&contraJumpFrame2);
+				break;
+			case 2:
+				contraDudeJump.setShape(&contraJumpFrame3);
+				break;
+			case 3:
+				contraDudeJump.setShape(&contraJumpFrame4);
+				break;
 			}
 		}
 
 		//draw code goes here
 		{
-			glClearColor(0.0f, 0.0f, 0.2f, 0.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			//enable shaders
 			glUseProgram(uiProgramColorTexture);
 			//glUseProgram(uiProgramFlat);
 
+			backgroundSprite.draw(ortho, shaderIDMVP);
+
 			sprite1.draw(ortho, shaderIDMVP);
 			sprite2.draw(ortho, shaderIDMVP);
 
 			contraDude.draw(ortho, shaderIDMVP);
+			contraDudeJump.draw(ortho, shaderIDMVP);
 
 			char buffer[200];
 

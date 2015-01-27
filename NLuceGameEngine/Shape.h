@@ -81,7 +81,8 @@ class Shape
 
 	float calculateV(int y)
 	{
-		return (float)y / texture->getHeight();
+		
+		return 1.0f - (float)y / texture->getHeight();
 	}
 
 	void setVertexColorsToWhite()
