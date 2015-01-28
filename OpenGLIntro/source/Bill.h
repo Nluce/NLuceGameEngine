@@ -20,20 +20,20 @@ public:
 
 	bool isRunning = false;
 	bool isJumping = false;
-	Texture contraSpriteSheet;
-	Shape contraRunFrame1;
-	Shape contraRunFrame2;
-	Shape contraRunFrame3;
-	Shape contraRunFrame4;
-	Shape contraRunFrame5;
+	Texture* contraSpriteSheet;
+	Shape* contraRunFrame1;
+	Shape* contraRunFrame2;
+	Shape* contraRunFrame3;
+	Shape* contraRunFrame4;
+	Shape* contraRunFrame5;
 
-	Shape contraStandFrame;
+	Shape* contraStandFrame;
 
 
-	Shape contraJumpFrame1;
-	Shape contraJumpFrame2;
-	Shape contraJumpFrame3;
-	Shape contraJumpFrame4;
+	Shape* contraJumpFrame1;
+	Shape* contraJumpFrame2;
+	Shape* contraJumpFrame3;
+	Shape* contraJumpFrame4;
 	void move(float elapsedTime, GLFWwindow* window,float time)
 	{
 		
@@ -84,19 +84,19 @@ public:
 			switch (runFrame)
 			{
 			case 0:
-				setShape(&contraRunFrame1);
+				setShape(contraRunFrame1);
 				break;
 			case 1:
-				setShape(&contraRunFrame2);
+				setShape(contraRunFrame2);
 				break;
 			case 2:
-				setShape(&contraRunFrame3);
+				setShape(contraRunFrame3);
 				break;
 			case 3:
-				setShape(&contraRunFrame4);
+				setShape(contraRunFrame4);
 				break;
 			case 4:
-				setShape(&contraRunFrame5);
+				setShape(contraRunFrame5);
 				break;
 
 			}
@@ -106,45 +106,45 @@ public:
 			switch (JumpFrame)
 			{
 			case 0:
-				setShape(&contraJumpFrame1);
+				setShape(contraJumpFrame1);
 				break;
 			case 1:
-				setShape(&contraJumpFrame2);
+				setShape(contraJumpFrame2);
 				break;
 			case 2:
-				setShape(&contraJumpFrame3);
+				setShape(contraJumpFrame3);
 				break;
 			case 3:
-				setShape(&contraJumpFrame4);
+				setShape(contraJumpFrame4);
 				break;
 			}
 		}
 		else
 		{
-			setShape(&contraStandFrame);
+			setShape(contraStandFrame);
 		}
 	}
 	
 
 	void init()
 	{
-		contraSpriteSheet = Texture("ContraSprites.png");
-		contraSpriteSheet.filterNearest();
+		contraSpriteSheet = new Texture("ContraSprites.png");
+		contraSpriteSheet->filterNearest();
 
-		contraRunFrame1 = Shape(&contraSpriteSheet, 0, 6, 19, 36, BOTTOM_CENTER);
-		contraRunFrame2 = Shape(&contraSpriteSheet, 37, 6, 24, 37, BOTTOM_CENTER);
-		contraRunFrame3 = Shape(&contraSpriteSheet, 77, 6, 24, 37, BOTTOM_CENTER);
-		contraRunFrame4 = Shape(&contraSpriteSheet, 115, 6, 24, 37, BOTTOM_CENTER);
-		contraRunFrame5 = Shape(&contraSpriteSheet, 157, 6, 24, 37, BOTTOM_CENTER);
+		contraRunFrame1 = new Shape(contraSpriteSheet, 0, 6, 19, 36, BOTTOM_CENTER);
+		contraRunFrame2 = new Shape(contraSpriteSheet, 37, 6, 24, 37, BOTTOM_CENTER);
+		contraRunFrame3 = new Shape(contraSpriteSheet, 77, 6, 24, 37, BOTTOM_CENTER);
+		contraRunFrame4 = new Shape(contraSpriteSheet, 115, 6, 24, 37, BOTTOM_CENTER);
+		contraRunFrame5 = new Shape(contraSpriteSheet, 157, 6, 24, 37, BOTTOM_CENTER);
 
-		contraStandFrame = Shape(&contraSpriteSheet, 196, 6, 24, 37, BOTTOM_CENTER);
+		contraStandFrame = new Shape(contraSpriteSheet, 196, 6, 24, 37, BOTTOM_CENTER);
 
-		contraJumpFrame1 = Shape(&contraSpriteSheet, 0, 51, 24, 24, BOTTOM_CENTER);
-		contraJumpFrame2 = Shape(&contraSpriteSheet, 41, 51, 24, 24, BOTTOM_CENTER);
-		contraJumpFrame3 = Shape(&contraSpriteSheet, 80, 51, 24, 24, BOTTOM_CENTER);
-		contraJumpFrame4 = Shape(&contraSpriteSheet, 120, 51, 24, 24, BOTTOM_CENTER);
+		contraJumpFrame1 = new Shape(contraSpriteSheet, 0, 51, 24, 24, BOTTOM_CENTER);
+		contraJumpFrame2 = new Shape(contraSpriteSheet, 41, 51, 24, 24, BOTTOM_CENTER);
+		contraJumpFrame3 = new Shape(contraSpriteSheet, 80, 51, 24, 24, BOTTOM_CENTER);
+		contraJumpFrame4 = new Shape(contraSpriteSheet, 120, 51, 24, 24, BOTTOM_CENTER);
 	
-		setShape(&contraRunFrame1);
+		setShape(contraRunFrame1);
 	}
 
 };
