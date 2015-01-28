@@ -181,7 +181,7 @@ public:
 		registerVertexBufferObject();
 	}
 
-	~Shape();
+	virtual ~Shape();
 	void setTexture(Texture * newTexture)
 	{
 		texture = newTexture;

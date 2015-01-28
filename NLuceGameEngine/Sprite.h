@@ -7,7 +7,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
+#include <GL/glew.h>
+#include <GL/wglew.h>
+#include <GLFW\glfw3.h>
 #include "Shape.h"
 
 using namespace glm;
@@ -16,14 +18,17 @@ static const glm::vec3 zAxis(0, 0, 1);
 
 class Sprite
 {
-	vec2 position;
+	
 	float rotation; // around z axis
 	Shape * shape;
 	
 
 public:
 	Sprite();
-	~Sprite();
+	virtual ~Sprite();
+
+	vec2 position;
+	vec2 velocity;
 
 	void drawSprite();
 	void moveSprite();
@@ -37,7 +42,18 @@ public:
 	{
 		position = newPosition;
 	}
-
+	void setVelocity(const vec2 & newVelocity)
+	{
+		velocity = newVelocity;
+	}
+	vec2 getPosition()
+	{
+		return position; 
+	}
+	vec2 getVelocity()
+	{
+		return velocity;
+	}
 	void setRotation(float newRotation)
 	{
 		rotation = newRotation;

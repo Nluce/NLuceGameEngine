@@ -3,12 +3,16 @@
 
 Shape::Shape()
 {
+	vertices = 0;
 }
 
 
 Shape::~Shape()
 {
-	delete[] vertices;
+	if (vertices != nullptr)
+	{
+		delete[] vertices;
+	}
 }
 
 
