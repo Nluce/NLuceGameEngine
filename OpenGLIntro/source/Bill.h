@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GL/wglew.h>
 #include <GLFW\glfw3.h>
+#include <vector>
 class Bill :
 	public Sprite
 {
@@ -20,6 +21,8 @@ public:
 
 	bool isRunning = false;
 	bool isJumping = false;
+	bool facingLeft = false;
+
 	Texture* contraSpriteSheet;
 	Shape* contraRunFrame1;
 	Shape* contraRunFrame2;
@@ -27,13 +30,22 @@ public:
 	Shape* contraRunFrame4;
 	Shape* contraRunFrame5;
 
+	Shape* contraRunLeftFrame1;
+	Shape* contraRunLeftFrame2;
+	Shape* contraRunLeftFrame3;
+	Shape* contraRunLeftFrame4;
+	Shape* contraRunLeftFrame5;
+	
 	Shape* contraStandFrame;
-
+	Shape* contraStandLeftFrame;
 
 	Shape* contraJumpFrame1;
 	Shape* contraJumpFrame2;
 	Shape* contraJumpFrame3;
 	Shape* contraJumpFrame4;
+
+	std::vector<Shape *> shapesToDelete;
+
 	void move(float elapsedTime, GLFWwindow* window,float time)
 	{
 		
@@ -49,6 +61,7 @@ public:
 		{
 			setVelocity(vec2(- speed, 0));
 			isRunning = true;
+			facingLeft = true;
 		}
 		
 
@@ -65,6 +78,7 @@ public:
 		{
 			setVelocity(vec2(speed, 0));
 			isRunning = true;
+			facingLeft = false;
 		}
 
 
@@ -81,23 +95,51 @@ public:
 
 		if (isRunning)
 		{
-			switch (runFrame)
+
+			if (facingLeft)
 			{
-			case 0:
-				setShape(contraRunFrame1);
-				break;
-			case 1:
-				setShape(contraRunFrame2);
-				break;
-			case 2:
-				setShape(contraRunFrame3);
-				break;
-			case 3:
-				setShape(contraRunFrame4);
-				break;
-			case 4:
-				setShape(contraRunFrame5);
-				break;
+				switch (runFrame)
+				{
+				case 0:
+					setShape(contraRunLeftFrame1);
+					break;
+				case 1:
+					setShape(contraRunLeftFrame2);
+					break;
+				case 2:
+					setShape(contraRunLeftFrame3);
+					break;
+				case 3:
+					setShape(contraRunLeftFrame4);
+					break;
+				case 4:
+					setShape(contraRunLeftFrame5);
+					break;
+
+				}
+
+			}
+			else
+			{
+				switch (runFrame)
+				{
+				case 0:
+					setShape(contraRunFrame1);
+					break;
+				case 1:
+					setShape(contraRunFrame2);
+					break;
+				case 2:
+					setShape(contraRunFrame3);
+					break;
+				case 3:
+					setShape(contraRunFrame4);
+					break;
+				case 4:
+					setShape(contraRunFrame5);
+					break;
+
+				}
 
 			}
 		}
@@ -121,30 +163,57 @@ public:
 		}
 		else
 		{
-			setShape(contraStandFrame);
+			if (facingLeft)
+			{
+				setShape(contraStandLeftFrame);
+			}
+			else
+			{
+				setShape(contraStandFrame);
+			}
 		}
 	}
 	
+	Shape * makeShape(int left, int top, int width, int height)
+	{
+		Shape * shape = new Shape(contraSpriteSheet, left, top, width, height, BOTTOM_CENTER, false);
+		shapesToDelete.push_back(shape);
+		return shape;
+	}
+
+	Shape * makeMirrorShape(Shape * origionalShape)
+	{
+		Shape * shape = new Shape(origionalShape, true);
+		shapesToDelete.push_back(shape);
+		return shape;
+	}
 
 	void init()
 	{
 		contraSpriteSheet = new Texture("ContraSprites.png");
 		contraSpriteSheet->filterNearest();
 
-		bool mirror = false;
+		bool mirror = true;
 
-		contraRunFrame1 = new Shape(contraSpriteSheet, 0, 6, 19, 36, BOTTOM_CENTER, mirror);
-		contraRunFrame2 = new Shape(contraSpriteSheet, 37, 6, 24, 37, BOTTOM_CENTER, mirror);
-		contraRunFrame3 = new Shape(contraSpriteSheet, 77, 6, 24, 37, BOTTOM_CENTER, mirror);
-		contraRunFrame4 = new Shape(contraSpriteSheet, 115, 6, 24, 37, BOTTOM_CENTER, mirror);
-		contraRunFrame5 = new Shape(contraSpriteSheet, 157, 6, 24, 37, BOTTOM_CENTER, mirror);
+		contraRunFrame1 = makeShape(0, 6, 19, 36);
+		contraRunFrame2 = makeShape(37, 6, 24, 37);
+		contraRunFrame3 = makeShape(77, 6, 24, 37);
+		contraRunFrame4 = makeShape(115, 6, 24, 37);
+		contraRunFrame5 = makeShape(157, 6, 24, 37);
 
-		contraStandFrame = new Shape(contraSpriteSheet, 196, 6, 24, 37, BOTTOM_CENTER, mirror);
+		contraRunLeftFrame1 = makeMirrorShape(contraRunFrame1);
+		contraRunLeftFrame2 = makeMirrorShape(contraRunFrame2);
+		contraRunLeftFrame3 = makeMirrorShape(contraRunFrame3);
+		contraRunLeftFrame4 = makeMirrorShape(contraRunFrame4);
+		contraRunLeftFrame5 = makeMirrorShape(contraRunFrame5);
 
-		contraJumpFrame1 = new Shape(contraSpriteSheet, 0, 51, 24, 24, BOTTOM_CENTER, mirror);
-		contraJumpFrame2 = new Shape(contraSpriteSheet, 41, 51, 24, 24, BOTTOM_CENTER, mirror);
-		contraJumpFrame3 = new Shape(contraSpriteSheet, 80, 51, 24, 24, BOTTOM_CENTER, mirror);
-		contraJumpFrame4 = new Shape(contraSpriteSheet, 120, 51, 24, 24, BOTTOM_CENTER, mirror);
+		contraStandFrame = makeShape(196, 6, 24, 37);
+		contraStandLeftFrame = makeMirrorShape(contraStandFrame);
+
+		contraJumpFrame1 = makeShape(0, 51, 24, 24);
+		contraJumpFrame2 = makeShape(41, 51, 24, 24);
+		contraJumpFrame3 = makeShape(80, 51, 24, 24);
+		contraJumpFrame4 = makeShape(120, 51, 24, 24);
 	
 		setShape(contraRunFrame1);
 	}

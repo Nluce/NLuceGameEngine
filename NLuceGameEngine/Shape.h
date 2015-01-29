@@ -147,6 +147,27 @@ public:
 	}
 
 
+	Shape(Shape * other, bool flipU = true)
+	{
+		texture = other->texture;
+		numberOfVerticies = other->numberOfVerticies;
+		vertices = new Vertex[numberOfVerticies];
+		memcpy(vertices, other->vertices, sizeof(Vertex) * numberOfVerticies);
+
+		if (flipU)
+		{
+			float u2 = vertices[0].fUVs[0];
+			float u1 = vertices[1].fUVs[0];
+
+			vertices[0].fUVs[0] = u1;
+			vertices[1].fUVs[0] = u2;
+			vertices[2].fUVs[0] = u2;
+			vertices[3].fUVs[0] = u1;
+		}
+
+		registerVertexBufferObject();
+	}
+
 	// creates a rectangular shape that is using a portion of the texture.
 	// This is useful for sprite sheets or fonts.
 	// left, top, width and height are pixel coordinates (not UV, UV will be calculated) in the texture.
