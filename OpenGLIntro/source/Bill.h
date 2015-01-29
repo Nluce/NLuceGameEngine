@@ -16,7 +16,7 @@ public:
 	int speed = 100;
 	int numberOfRunFrames = 5;
 	int numberOfJumpFrames = 4;
-	int animationSpeedInFramesPerSecond = 2;
+	int animationSpeedInFramesPerSecond = 10;
 
 	bool isRunning = false;
 	bool isJumping = false;
@@ -131,18 +131,20 @@ public:
 		contraSpriteSheet = new Texture("ContraSprites.png");
 		contraSpriteSheet->filterNearest();
 
-		contraRunFrame1 = new Shape(contraSpriteSheet, 0, 6, 19, 36, BOTTOM_CENTER);
-		contraRunFrame2 = new Shape(contraSpriteSheet, 37, 6, 24, 37, BOTTOM_CENTER);
-		contraRunFrame3 = new Shape(contraSpriteSheet, 77, 6, 24, 37, BOTTOM_CENTER);
-		contraRunFrame4 = new Shape(contraSpriteSheet, 115, 6, 24, 37, BOTTOM_CENTER);
-		contraRunFrame5 = new Shape(contraSpriteSheet, 157, 6, 24, 37, BOTTOM_CENTER);
+		bool mirror = false;
 
-		contraStandFrame = new Shape(contraSpriteSheet, 196, 6, 24, 37, BOTTOM_CENTER);
+		contraRunFrame1 = new Shape(contraSpriteSheet, 0, 6, 19, 36, BOTTOM_CENTER, mirror);
+		contraRunFrame2 = new Shape(contraSpriteSheet, 37, 6, 24, 37, BOTTOM_CENTER, mirror);
+		contraRunFrame3 = new Shape(contraSpriteSheet, 77, 6, 24, 37, BOTTOM_CENTER, mirror);
+		contraRunFrame4 = new Shape(contraSpriteSheet, 115, 6, 24, 37, BOTTOM_CENTER, mirror);
+		contraRunFrame5 = new Shape(contraSpriteSheet, 157, 6, 24, 37, BOTTOM_CENTER, mirror);
 
-		contraJumpFrame1 = new Shape(contraSpriteSheet, 0, 51, 24, 24, BOTTOM_CENTER);
-		contraJumpFrame2 = new Shape(contraSpriteSheet, 41, 51, 24, 24, BOTTOM_CENTER);
-		contraJumpFrame3 = new Shape(contraSpriteSheet, 80, 51, 24, 24, BOTTOM_CENTER);
-		contraJumpFrame4 = new Shape(contraSpriteSheet, 120, 51, 24, 24, BOTTOM_CENTER);
+		contraStandFrame = new Shape(contraSpriteSheet, 196, 6, 24, 37, BOTTOM_CENTER, mirror);
+
+		contraJumpFrame1 = new Shape(contraSpriteSheet, 0, 51, 24, 24, BOTTOM_CENTER, mirror);
+		contraJumpFrame2 = new Shape(contraSpriteSheet, 41, 51, 24, 24, BOTTOM_CENTER, mirror);
+		contraJumpFrame3 = new Shape(contraSpriteSheet, 80, 51, 24, 24, BOTTOM_CENTER, mirror);
+		contraJumpFrame4 = new Shape(contraSpriteSheet, 120, 51, 24, 24, BOTTOM_CENTER, mirror);
 	
 		setShape(contraRunFrame1);
 	}

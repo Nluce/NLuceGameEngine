@@ -152,7 +152,8 @@ public:
 	// left, top, width and height are pixel coordinates (not UV, UV will be calculated) in the texture.
 	// they indicate the portion of the texture to use for the shape
 	// since these are texture pixel coordinates the origin is at the top left
-	Shape(Texture * newTexture, int left, int top, int width, int height, ShapeAlignment alignment = CENTER)
+	// setting flipU to true creates a mirror image of the shape
+	Shape(Texture * newTexture, int left, int top, int width, int height, ShapeAlignment alignment = CENTER, bool flipU = false)
 	{
 		texture = newTexture;
 		int h = texture->getHeight();
@@ -165,16 +166,30 @@ public:
 
 		//set up the UVs
 
-		vertices[0].fUVs[0] = calculateU(left);
+		float u1;
+		float u2;
+		
+		if (flipU)
+		{
+			u1 = calculateU(left + width);
+			u2 = calculateU(left);
+		}
+		else
+		{
+			u1 = calculateU(left);
+			u2 = calculateU(left + width);
+		}
+
+		vertices[0].fUVs[0] = u1;
 		vertices[0].fUVs[1] = calculateV(top + height);
 
-		vertices[1].fUVs[0] = calculateU(left + width);
+		vertices[1].fUVs[0] = u2;
 		vertices[1].fUVs[1] = calculateV(top + height);
 
-		vertices[2].fUVs[0] = calculateU(left + width);
+		vertices[2].fUVs[0] = u2;
 		vertices[2].fUVs[1] = calculateV(top);
 
-		vertices[3].fUVs[0] = calculateU(left);
+		vertices[3].fUVs[0] = u1;
 		vertices[3].fUVs[1] = calculateV(top);
 
 		setVertexColorsToWhite();
