@@ -25,7 +25,7 @@ GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 
 const int SCREEN_HEIGHT = 480;
 const int SCREEN_WIDTH = 640;
-
+ 
 
 int main()
 {
