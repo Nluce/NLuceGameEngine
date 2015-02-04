@@ -44,6 +44,8 @@ public:
 	vec2 preMove;
 	vec2 postMove;
 
+
+
 	Texture* contraSpriteSheet;
 	Shape* contraRunFrame1;
 	Shape* contraRunFrame2;
