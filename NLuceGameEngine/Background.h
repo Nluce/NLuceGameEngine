@@ -14,6 +14,6 @@ class Background :
 public:
 	Background();
 	~Background();
-	void bgScroll();
+	void bgScroll(); 
 };
 

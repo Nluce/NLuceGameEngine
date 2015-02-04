@@ -45,13 +45,42 @@ public:
 	Shape* contraRunFrame3;
 	Shape* contraRunFrame4;
 	Shape* contraRunFrame5;
-
 	Shape* contraRunLeftFrame1;
 	Shape* contraRunLeftFrame2;
 	Shape* contraRunLeftFrame3;
 	Shape* contraRunLeftFrame4;
 	Shape* contraRunLeftFrame5;
 	
+	Shape* contraShootRightStand_ShootRightRunFrame1;
+	Shape* contraShootRightRunFrame2;
+	Shape* contraShootRightRunFrame3;
+
+	Shape* contraShootUpRightRunFrame1;
+	Shape* contraShootUpRightRunFrame2;
+	Shape* contraShootUpRightRunFrame3;
+
+	Shape* contraShootDownRightRunFrame1;
+	Shape* contraShootDownRightRunFrame2;
+	Shape* contraShootDowmRightRunFrame3;
+
+	Shape* contraShootStraightUpRightFrame;
+	Shape* contraLayDownRightFrame;
+
+	Shape* contraShootStraightUpLeftFrame;
+	Shape* contraLayDownLeftFrame;
+
+	Shape* contraShootLeftStand_ShootLeftRunFrame1;
+	Shape* contraShootLeftRunFrame2;
+	Shape* contraShootLeftRunFrame3;
+
+	Shape* contraShootUpLeftRunFrame1;
+	Shape* contraShootUpLeftRunFrame2;
+	Shape* contraShootUpLeftRunFrame3;
+
+	Shape* contraShootDownLeftRunFrame1;
+	Shape* contraShootDownLeftRunFrame2;
+	Shape* contraShootDowmLeftRunFrame3;
+
 	Shape* contraStandFrame;
 	Shape* contraStandLeftFrame;
 
@@ -64,6 +93,19 @@ public:
 	Shape* contraJumpLeftFrame2;
 	Shape* contraJumpLeftFrame3;
 	Shape* contraJumpLeftFrame4;
+
+	Shape* contraRightDeathFlipFrame1;
+	Shape* contraRightDeathFlipFrame2;
+	Shape* contraRightDeathFlipFrame3;
+	Shape* contraRightDeathFlipFrame4;
+
+	Shape* contraLeftDeathFlipFrame1;
+	Shape* contraLeftDeathFlipFrame2;
+	Shape* contraLeftDeathFlipFrame3;
+	Shape* contraLeftDeathFlipFrame4;
+
+	Shape* contraRightDead;
+	Shape* contraLeftDead;
 
 	std::vector<Shape *> shapesToDelete;
 
@@ -322,6 +364,36 @@ public:
 		contraRunLeftFrame4 = makeMirrorShape(contraRunFrame4);
 		contraRunLeftFrame5 = makeMirrorShape(contraRunFrame5);
 
+		contraShootRightStand_ShootRightRunFrame1 = makeShape(235, 6, 24, 37);
+		contraShootRightRunFrame2 = makeShape(235, 86, 24, 37);
+		contraShootRightRunFrame3 = makeShape(272, 86, 24, 37);
+
+		contraShootLeftStand_ShootLeftRunFrame1 = makeMirrorShape(contraShootRightStand_ShootRightRunFrame1);
+		contraShootLeftRunFrame2 = makeMirrorShape(contraShootRightRunFrame2);
+		contraShootLeftRunFrame3 = makeMirrorShape(contraShootRightRunFrame3);
+
+		contraShootUpRightRunFrame1 = makeShape(0, 128, 19, 36);
+		contraShootUpRightRunFrame2 = makeShape(31, 128, 24, 37);
+		contraShootUpRightRunFrame3 = makeShape(67, 189, 24, 37);
+
+		contraShootUpLeftRunFrame1 = makeMirrorShape(contraShootUpRightRunFrame1);
+		contraShootUpLeftRunFrame2 = makeMirrorShape(contraShootUpRightRunFrame2);
+		contraShootUpLeftRunFrame3 = makeMirrorShape(contraShootUpRightRunFrame3);
+
+		contraShootStraightUpRightFrame = makeShape(319, 0, 24, 45);
+		contraShootStraightUpLeftFrame = makeMirrorShape(contraShootStraightUpRightFrame);
+
+		contraLayDownRightFrame = makeShape(271, 13, 37, 18);
+		contraLayDownLeftFrame = makeMirrorShape(contraLayDownRightFrame);
+
+		contraShootDownRightRunFrame1 = makeShape(305, 86, 24, 37);
+		contraShootDownRightRunFrame1 = makeShape(335, 86, 24, 37);
+		contraShootDownRightRunFrame1 = makeShape(362, 85, 24, 37);
+
+		contraShootDownLeftRunFrame1 = makeMirrorShape(contraShootDownRightRunFrame1);
+		contraShootDownLeftRunFrame1 = makeMirrorShape(contraShootDownRightRunFrame2);
+		contraShootDownLeftRunFrame1 = makeMirrorShape(contraShootDowmRightRunFrame3);
+
 		contraStandFrame = makeShape(196, 6, 24, 37);
 		contraStandLeftFrame = makeMirrorShape(contraStandFrame);
 
@@ -329,6 +401,19 @@ public:
 		contraJumpFrame2 = makeShape(41, 51, 24, 24);
 		contraJumpFrame3 = makeShape(80, 51, 24, 24);
 		contraJumpFrame4 = makeShape(120, 51, 24, 24);
+
+		contraRightDeathFlipFrame1 = makeShape(155, 53, 28, 19);
+		contraRightDeathFlipFrame2 = makeShape(198, 50, 23, 25);
+		contraRightDeathFlipFrame3 = makeShape(155, 53, 28, 19);
+		contraRightDeathFlipFrame4 = makeShape(276, 53, 28, 21);
+
+		contraLeftDeathFlipFrame1 = makeMirrorShape(contraRightDeathFlipFrame1);
+		contraLeftDeathFlipFrame2 = makeMirrorShape(contraRightDeathFlipFrame2);
+		contraLeftDeathFlipFrame3 = makeMirrorShape(contraRightDeathFlipFrame3);
+		contraLeftDeathFlipFrame4 = makeMirrorShape(contraRightDeathFlipFrame4);
+
+		contraRightDead = makeShape(311, 56, 41, 14);
+		contraLeftDead = makeMirrorShape(contraRightDead);
 
 		platformList[0] = vec3(0, screenHeight - 427, 77);
 		platformList[1] = vec3(77, screenHeight - 367, 310);
