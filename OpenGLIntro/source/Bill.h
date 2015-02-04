@@ -17,7 +17,7 @@ public:
 	}
 	virtual ~Bill();
 	vec3 platformList[66];
-	
+
 
 	int speed = 100;
 	int numberOfRunFrames = 5;
@@ -39,7 +39,8 @@ public:
 	bool lookingUp = false;
 	bool lookingDown = false;
 	bool dead = false;
-
+	bool shapeHasBeenSet = false;
+	bool lookingDiagonal = false;
 	vec2 preMove;
 	vec2 postMove;
 
@@ -54,7 +55,7 @@ public:
 	Shape* contraRunLeftFrame3;
 	Shape* contraRunLeftFrame4;
 	Shape* contraRunLeftFrame5;
-	
+
 	Shape* contraShootRightStand_ShootRightRunFrame1;
 	Shape* contraShootRightRunFrame2;
 	Shape* contraShootRightRunFrame3;
@@ -113,7 +114,7 @@ public:
 
 	std::vector<Shape *> shapesToDelete;
 
-	
+
 
 	void move(float elapsedTime, GLFWwindow* window, float time)
 	{
@@ -169,7 +170,7 @@ public:
 		if (stateUp && onTheGround)
 		{
 			lookingUp = true;
-		} 
+		}
 		else
 		{
 			lookingUp = false;
@@ -245,6 +246,17 @@ public:
 		int runDiagionalFrame = int(time * animationSpeedInFramesPerSecond) % numberOfRunDiagonalFrames;
 		int JumpFrame = int(time * animationSpeedInFramesPerSecond) % numberOfJumpFrames;
 
+		if (isRunning && lookingUp)
+		{
+			lookingDiagonal = true;
+		}
+		else if (isRunning && lookingDown)
+		{
+			lookingDiagonal = true;
+		}
+		
+	
+
 		if (isRunning && !isJumping)
 		{
 
@@ -277,12 +289,11 @@ public:
 					break;
 				case 2:
 					setShape(contraShootDownLeftRunFrame3);
-
 					break;
 				}
 
 			}
-			else if (facingLeft)
+			else if (facingLeft && !lookingDiagonal)
 			{
 				switch (runFrame)
 				{
@@ -335,7 +346,7 @@ public:
 					break;
 				}
 			}
-			else if (!facingLeft)
+			else if (!facingLeft && !lookingDiagonal)
 			{
 				switch (runFrame)
 				{
@@ -413,15 +424,20 @@ public:
 		{
 			setShape(contraLayDownRightFrame);
 		}
-		else if (facingLeft)
+		else if (facingLeft && !lookingDiagonal)
 		{
-			setShape(contraStandLeftFrame);
+				setShape(contraStandLeftFrame);
 		}
 		else
 		{
-			setShape(contraStandFrame);
+			if (!lookingDiagonal)
+			{
+
+				setShape(contraStandFrame);
+			}
 		}
 	}
+
 
 
 	Shape * makeShape(int left, int top, int width, int height)
@@ -467,7 +483,7 @@ public:
 
 		contraShootUpRightRunFrame1 = makeShape(0, 128, 19, 36);
 		contraShootUpRightRunFrame2 = makeShape(31, 128, 24, 37);
-		contraShootUpRightRunFrame3 = makeShape(67, 189, 24, 37);
+		contraShootUpRightRunFrame3 = makeShape(67, 128, 24, 37);
 
 		contraShootUpLeftRunFrame1 = makeMirrorShape(contraShootUpRightRunFrame1);
 		contraShootUpLeftRunFrame2 = makeMirrorShape(contraShootUpRightRunFrame2);
