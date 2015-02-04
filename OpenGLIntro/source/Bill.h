@@ -61,7 +61,7 @@ public:
 
 	Shape* contraShootDownRightRunFrame1;
 	Shape* contraShootDownRightRunFrame2;
-	Shape* contraShootDowmRightRunFrame3;
+	Shape* contraShootDownRightRunFrame3;
 
 	Shape* contraShootStraightUpRightFrame;
 	Shape* contraLayDownRightFrame;
@@ -79,7 +79,7 @@ public:
 
 	Shape* contraShootDownLeftRunFrame1;
 	Shape* contraShootDownLeftRunFrame2;
-	Shape* contraShootDowmLeftRunFrame3;
+	Shape* contraShootDownLeftRunFrame3;
 
 	Shape* contraStandFrame;
 	Shape* contraStandLeftFrame;
@@ -387,12 +387,12 @@ public:
 		contraLayDownLeftFrame = makeMirrorShape(contraLayDownRightFrame);
 
 		contraShootDownRightRunFrame1 = makeShape(305, 86, 24, 37);
-		contraShootDownRightRunFrame1 = makeShape(335, 86, 24, 37);
-		contraShootDownRightRunFrame1 = makeShape(362, 85, 24, 37);
+		contraShootDownRightRunFrame2 = makeShape(335, 86, 24, 37);
+		contraShootDownRightRunFrame3 = makeShape(362, 85, 24, 37);
 
 		contraShootDownLeftRunFrame1 = makeMirrorShape(contraShootDownRightRunFrame1);
-		contraShootDownLeftRunFrame1 = makeMirrorShape(contraShootDownRightRunFrame2);
-		contraShootDownLeftRunFrame1 = makeMirrorShape(contraShootDowmRightRunFrame3);
+		contraShootDownLeftRunFrame2 = makeMirrorShape(contraShootDownRightRunFrame2);
+		contraShootDownLeftRunFrame3 = makeMirrorShape(contraShootDownRightRunFrame3);
 
 		contraStandFrame = makeShape(196, 6, 24, 37);
 		contraStandLeftFrame = makeMirrorShape(contraStandFrame);

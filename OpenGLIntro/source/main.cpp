@@ -62,12 +62,13 @@ int main()
 
 	Text font = Text("../NLuceGameEngine/fonts/font.png");
 
-	Texture backgroundTexture("Level.png");
-
+	Texture backgroundTexture("Contra_Waterfall_stage_3.png");
+	backgroundTexture.filterNearest();
+	const float mapWidth = 256;
 	
 	
 	
-	Shape background(&backgroundTexture,BOTTOM_LEFT);
+	Shape background(&backgroundTexture, BOTTOM_LEFT);
 
 
 
@@ -79,13 +80,7 @@ int main()
 	//find the position of the matrix variable in the shader so we can send info there later
 	GLuint shaderIDMVP = glGetUniformLocation(uiProgramColorTexture, "MVP");
 
-	glm::mat4 ortho = glm::ortho(0.0f, (float)SCREEN_WIDTH, 0.0f, (float)SCREEN_HEIGHT);
-
-	for (int y = 0; y < 4; y++){
-		for (int x = 0; x < 4; x++){
-			cout << x << ", " << y << " = " << ortho[x][y] << endl;
-		}
-	}
+	glm::mat4 screen = glm::ortho(0.0f, (float)SCREEN_WIDTH, 0.0f, (float)SCREEN_HEIGHT);
 
 	// set up blending so that the texture can have treanspeanancy...
 	glEnable(GL_BLEND);
@@ -113,6 +108,9 @@ int main()
 	int highScore = 0;
 	float lastTime = 0;
 
+	float cameraHeight = 0;
+
+
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
@@ -131,6 +129,20 @@ int main()
 			contraDude.move(elapsedTime, window,time);
 		}
 		//draw code goes here
+		const float gameScale = SCREEN_WIDTH / mapWidth;
+//		mat4 world = translate(screen, vec3(320 - contraDude.position.x, 0, 0)); // horizontal scrolling
+		mat4 world = screen;
+
+
+		if (contraDude.position.y > cameraHeight)
+		{
+			cameraHeight = contraDude.position.y;
+		}
+
+		world = translate(world, vec3(0, centerY, 0)); // center on screen
+		world = scale(world, vec3(gameScale, gameScale, 1.0)); // scale to screen
+		world = translate(world, vec3(0, -cameraHeight, 0)); // vertical scrolling
+
 		{
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -139,15 +151,16 @@ int main()
 			glUseProgram(uiProgramColorTexture);
 			//glUseProgram(uiProgramFlat);
 
-			backgroundSprite.draw(ortho, shaderIDMVP);
+			backgroundSprite.draw(world, shaderIDMVP);
 
-			contraDude.draw(ortho, shaderIDMVP);
+			contraDude.draw(world, shaderIDMVP);
 
 			char buffer[200];
 			
 			sprintf_s(buffer, "HIGH SCORE %d", highScore);
 			
-			font.drawString(ortho, shaderIDMVP, buffer, 50, 150);
+			font.drawString(screen, shaderIDMVP, buffer, 50, 150);
+			//font.drawString(screen, shaderIDMVP, "MORE TEXT", 50, 100);
 			//swap front and back buffers
 			glfwSwapBuffers(window);
 		}
