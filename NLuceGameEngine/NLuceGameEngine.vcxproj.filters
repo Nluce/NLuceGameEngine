@@ -36,10 +36,10 @@
     <ClInclude Include="Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animations.h">
+    <ClInclude Include="Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
+    <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

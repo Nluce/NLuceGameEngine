@@ -117,33 +117,46 @@ public:
 
 	void move(float elapsedTime, GLFWwindow* window, float time)
 	{
-		int stateSpace = glfwGetKey(window, GLFW_KEY_SPACE);
-		int stateLeft = glfwGetKey(window, GLFW_KEY_LEFT);
-		int stateDown = glfwGetKey(window, GLFW_KEY_DOWN);
-		int stateRight = glfwGetKey(window, GLFW_KEY_RIGHT);
-		int stateUp = glfwGetKey(window, GLFW_KEY_UP);
-		int stateShoot = glfwGetKey(window, GLFW_KEY_Z);
+		bool stateSpace = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
+		bool stateLeft = glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
+		bool stateDown = glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS;
+		bool stateRight = glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS;
+		bool stateUp = glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS;
+		bool stateShoot = glfwGetKey(window, GLFW_KEY_Z) == GLFW_PRESS;
 
-		if (stateSpace == GLFW_PRESS && onTheGround)
+
+		if (stateRight == stateLeft)
 		{
-			//setVelocity(vec2(0, speed));
+			// if both on or both off
+			velocity.x = 0;
+			isRunning = false;
+		}
+		else
+		{
+			if (stateLeft)
+			{
+				velocity.x = -speed;
+				isRunning = true;
+				facingLeft = true;
+			}
+
+			if (stateRight)
+			{
+				velocity.x = speed;
+				isRunning = true;
+				facingLeft = false;
+			}
+		}
+
+
+		if (stateSpace && onTheGround && !stateDown)
+		{
 			velocity.y = jump;
 			isJumping = true;
 		}
 
-
-		if (stateLeft == GLFW_PRESS)
-		{
-			//setVelocity(vec2(- speed, 0));
-			velocity.x = -speed;
-			isRunning = true;
-			facingLeft = true;
-		}
-
-
-
 		isDropping = false;
-		if (stateDown == GLFW_PRESS)
+		if (stateDown && stateSpace)
 		{
 			if (isOnPlatform)
 			{
@@ -153,30 +166,25 @@ public:
 			}
 		}
 
-		if (stateUp == GLFW_PRESS && onTheGround)
+		if (stateUp && onTheGround)
 		{
 			lookingUp = true;
+		} 
+		else
+		{
+			lookingUp = false;
 		}
 
-		if (stateDown == GLFW_PRESS && onTheGround)
-
+		if (stateDown && onTheGround)
 		{
-			lookingDown == true;
+			lookingDown = true;
 		}
-		if (stateRight == GLFW_PRESS)
+		else
 		{
-			velocity.x = speed;
-			isRunning = true;
-			facingLeft = false;
+			lookingDown = false;
 		}
 
 		velocity.y -= gravity * elapsedTime;
-
-		if (stateRight == GLFW_RELEASE && stateLeft == GLFW_RELEASE)
-		{
-			velocity.x = 0;
-			isRunning = false;
-		}
 
 		if (position.y < 0)
 		{
@@ -185,9 +193,6 @@ public:
 			isJumping = false;
 			velocity.y = 0;
 		}
-
-
-
 		else
 		{
 			onTheGround = false;
@@ -223,8 +228,6 @@ public:
 			velocity.y = 0;
 		}
 
-
-
 		if (position.x < 4)
 		{
 			position.x = 4;
@@ -234,11 +237,7 @@ public:
 			position.x = 252;
 		}
 
-
-
 		position += velocity * elapsedTime;
-
-
 
 		//cout << velocity.y << endl;
 
@@ -362,7 +361,6 @@ public:
 		{
 			if (facingLeft)
 			{
-
 				switch (JumpFrame)
 				{
 				case 0:
@@ -416,14 +414,16 @@ public:
 			setShape(contraLayDownRightFrame);
 		}
 		else if (facingLeft)
-				{
-					setShape(contraStandLeftFrame);
-				}
-				else
-				{
-					setShape(contraStandFrame);
-				}
-			}
+		{
+			setShape(contraStandLeftFrame);
+		}
+		else
+		{
+			setShape(contraStandFrame);
+		}
+	}
+
+
 	Shape * makeShape(int left, int top, int width, int height)
 	{
 		Shape * shape = new Shape(contraSpriteSheet, left, top, width, height, BOTTOM_CENTER, false);

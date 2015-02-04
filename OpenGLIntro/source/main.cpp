@@ -134,7 +134,7 @@ int main()
 		mat4 world = screen;
 
 
-		if (contraDude.position.y > cameraHeight)
+		//if (contraDude.position.y > cameraHeight)
 		{
 			cameraHeight = contraDude.position.y;
 		}

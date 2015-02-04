@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animations.h" />
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Sprite.h" />
