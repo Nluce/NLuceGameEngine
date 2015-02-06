@@ -32,7 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\Debug\NLuceGameEngine.lib" />
-    <Library Include="..\NLuceGameEngine\libs\glew32.lib" />
     <Library Include="..\NLuceGameEngine\libs\glew32s.lib" />
     <Library Include="..\NLuceGameEngine\libs\glfw3dll.lib" />
     <Library Include="..\NLuceGameEngine\libs\SOIL.lib" />

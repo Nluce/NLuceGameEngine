@@ -11,8 +11,10 @@
 #include <GL/wglew.h>
 #include <GLFW\glfw3.h>
 #include "Shape.h"
+#include <iostream>
 
 using namespace glm;
+using namespace std;
 
 static const vec3 zAxis(0, 0, 1);
 
@@ -61,6 +63,7 @@ public:
 
 	void draw(const mat4 & matrixIn, int matrixUniformID)
 	{
+		if (shape)
 		{
 			mat4 out = matrixIn;
 
@@ -79,9 +82,14 @@ public:
 
 			//send our mvp matrix to the shader
 			glUniformMatrix4fv(matrixUniformID, 1, GL_FALSE, &out[0][0]);
+
+			shape->draw();
+		}
+		else
+		{
+			cerr << "No shape to draw" << endl;
 		}
 
-		shape->draw();
 	}
 
 

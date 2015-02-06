@@ -6,10 +6,12 @@
 #include <iostream>
 
 class Animation {
+	// frames is a vector (list) of Shape pointers
 	std::vector<Shape *> frames;
-	float framesPerSecond = 10.0f;
 
 public:
+	float framesPerSecond = 10.0f;
+
 	Animation(){}
 
 	void addFrame(Shape* frame)

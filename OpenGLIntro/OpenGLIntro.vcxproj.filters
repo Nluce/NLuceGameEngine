@@ -76,9 +76,6 @@
     <Library Include="..\NLuceGameEngine\libs\SOIL.lib">
       <Filter>libs</Filter>
     </Library>
-    <Library Include="..\NLuceGameEngine\libs\glew32.lib">
-      <Filter>libs</Filter>
-    </Library>
     <Library Include="..\NLuceGameEngine\libs\glew32s.lib">
       <Filter>libs</Filter>
     </Library>

@@ -214,6 +214,10 @@ public:
 		{
 			setShape(animation->getCurrentFrame(time));
 		}
+		else
+		{
+			cerr << "Animation not set" << endl;
+		}
 	}
 
 
@@ -251,13 +255,14 @@ public:
 		runShootUp.addFrame(makeShape(31, 128, 24, 37));
 		runShootUp.addFrame(makeShape(67, 128, 24, 37));
 
+		// It's ok for an animation to have just one frame.
 		shootStraightUp.addFrame(makeShape(319, 0, 24, 45));
+
 		layDown.addFrame(makeShape(271, 13, 37, 18));
 
 		runShootDown.addFrame(makeShape(305, 86, 24, 37));
 		runShootDown.addFrame(makeShape(335, 86, 24, 37));
 		runShootDown.addFrame(makeShape(362, 85, 24, 37));
-
 
 		stand.addFrame(makeShape(196, 6, 24, 37));
 
