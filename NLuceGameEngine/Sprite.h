@@ -33,7 +33,7 @@ public:
 	vec2 velocity;
 
 	void drawSprite();
-	void moveSprite();
+	void moveSprite(float elapsedTime);
 
 	void setShape(Shape * newShape)
 	{

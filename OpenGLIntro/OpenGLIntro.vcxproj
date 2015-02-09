@@ -11,8 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="source\Bill.cpp" />
+    <ClCompile Include="source\Bullet.cpp" />
+    <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -38,8 +39,9 @@
     <Library Include="..\NLuceGameEngine\libs\SOIL.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="source\Bill.h" />
+    <ClInclude Include="source\Bullet.h" />
+    <ClInclude Include="source\Game.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{69FBEB9F-FCD6-419F-8948-DB3A37EE0F73}</ProjectGuid>

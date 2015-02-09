@@ -11,6 +11,8 @@
 #include "Text.h"
 #include "Sprite.h"
 #include "Bill.h"
+#include "Game.h"
+
 using namespace std;
 
 
@@ -66,7 +68,7 @@ int main()
 	backgroundTexture.filterNearest();
 	const float mapWidth = 256;
 	
-	
+	theGame.mapSize = vec2(backgroundTexture.getWidth(), backgroundTexture.getHeight());
 	
 	Shape background(&backgroundTexture, BOTTOM_LEFT);
 

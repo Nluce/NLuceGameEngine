@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Animation.h"
-
+#include "Bullet.h"
 
 using namespace std;
 class Bill :
