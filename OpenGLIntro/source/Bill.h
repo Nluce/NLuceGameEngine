@@ -27,10 +27,11 @@ public:
 	int jumpSpeed = 200;
 	int drop = 10;
 	int mapHeight = 2159;
-	int reloadTime;
+	float reloadTime;
 	double gravity = 250.0f;
 
 	int bulletSpeed = 150;
+	int fireRate = 20; // fireRate is in shots per second
 
 	bool isJumping = false;
 	bool onTheGround = false;
@@ -74,7 +75,7 @@ public:
 		
 		if (reloadTime > 0)
 		{
-			reloadTime -= 1;
+			reloadTime -= elapsedTime;
 		}
 		else
 		{
@@ -236,7 +237,7 @@ public:
 		{
 			Bullet::shoot(position + vec2(10,25), vec2(bulletSpeed, 0));
 			gunLoaded = false;
-			reloadTime = 700;
+			reloadTime = 1.0 / fireRate;
 		}
 	}
 
