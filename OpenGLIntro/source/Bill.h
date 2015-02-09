@@ -68,6 +68,11 @@ public:
 		RUNNING_SHOOTING_UP,
 		RUNNING_SHOOTING_DOWN,
 		JUMPING,
+		JUMPING_SHOOTING_UP,
+		JUMPING_SHOOTING_UP_FORWARD,
+		JUMPING_SHOOTING_FORWARD,
+		JUMPING_SHOOTING_DOWN_FORWARD,
+		JUMPING_SHOOTING_DOWN
 	};
 
 	void move(float elapsedTime, GLFWwindow* window, float time)
@@ -197,7 +202,26 @@ public:
 		if (isJumping)
 		{
 			animation = &jumpAnimation;
-			orientation = JUMPING;
+			if (upButton && !rightButton)
+			{
+				orientation = JUMPING_SHOOTING_UP;
+			}
+			else if (upButton &&rightButton)
+			{
+				orientation = JUMPING_SHOOTING_UP_FORWARD;
+			}
+			else if (downButton && rightButton)
+			{
+				orientation = JUMPING_SHOOTING_DOWN_FORWARD;
+			}
+			else if (downButton && !rightButton)
+			{
+				orientation = JUMPING_SHOOTING_DOWN;
+			}
+			else if (!downButton && rightButton)
+			{
+				orientation = JUMPING_SHOOTING_FORWARD;
+			}
 		}
 		else if (isRunning)
 		{
@@ -254,7 +278,7 @@ public:
 			cerr << "Animation not set" << endl;
 		}
 
-		if (fireButton && gunLoaded && !isJumping)
+		if (fireButton && gunLoaded)
 		{
 			vec2 bulletOffset;
 			vec2 bulletVelocity;
@@ -286,8 +310,25 @@ public:
 				bulletOffset = vec2(10, 16);
 				bulletVelocity = vec2(bulletSpeed, -bulletSpeed / 2.5);
 				break;
-			case JUMPING:
-
+			case JUMPING_SHOOTING_UP:
+				bulletOffset = vec2(10, 16);
+				bulletVelocity = vec2(0, bulletSpeed / 2.5);
+				break;
+			case JUMPING_SHOOTING_UP_FORWARD:
+				bulletOffset = vec2(10, 16);
+				bulletVelocity = vec2(bulletSpeed, bulletSpeed / 2.5);
+				break;
+			case JUMPING_SHOOTING_FORWARD:
+				bulletOffset = vec2(10, 16);
+				bulletVelocity = vec2(bulletSpeed, 0);
+				break;
+			case JUMPING_SHOOTING_DOWN_FORWARD:
+				bulletOffset = vec2(10, 16);
+				bulletVelocity = vec2(bulletSpeed, -bulletSpeed / 2.5);
+				break;
+			case JUMPING_SHOOTING_DOWN:
+				bulletOffset = vec2(10, 16);
+				bulletVelocity = vec2(-bulletSpeed, 0);
 				break;
 
 			}
