@@ -27,12 +27,17 @@ public:
 	int jumpSpeed = 200;
 	int drop = 10;
 	int mapHeight = 2159;
+	int reloadTime;
 	double gravity = 250.0f;
+
+	int bulletSpeed = 150;
 
 	bool isJumping = false;
 	bool onTheGround = false;
 	bool isOnPlatform = false;
 	bool facingLeft = false;
+	bool gunLoaded = true;
+
 
 	bool isDead = false;
 
@@ -66,7 +71,15 @@ public:
 
 		bool isDropping = false;
 		bool isRunning = false;
-
+		
+		if (reloadTime > 0)
+		{
+			reloadTime -= 1;
+		}
+		else
+		{
+			gunLoaded = true;
+		}
 
 		if (rightButton == leftButton)
 		{
@@ -219,9 +232,11 @@ public:
 			cerr << "Animation not set" << endl;
 		}
 
-		if (fireButton)
+		if (fireButton && gunLoaded)
 		{
-			Bullet::shoot(position + vec2(10,25), vec2(150, 0));
+			Bullet::shoot(position + vec2(10,25), vec2(bulletSpeed, 0));
+			gunLoaded = false;
+			reloadTime = 700;
 		}
 	}
 
