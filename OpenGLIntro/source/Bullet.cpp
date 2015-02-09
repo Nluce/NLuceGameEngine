@@ -48,4 +48,8 @@ void Bullet::moveAll(float elapsedTime)
 void Bullet::drawAll(const mat4 & matrixIn, int matrixUniformID)
 {
 	// draw all the bullets
+	for (Bullet * bullet : bulletList)
+	{
+		bullet->draw(matrixIn,matrixUniformID);
+	}
 }
