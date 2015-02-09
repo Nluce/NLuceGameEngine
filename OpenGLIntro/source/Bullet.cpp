@@ -41,26 +41,21 @@ void Bullet::shoot(const vec2 & position, const vec2 & velocity)
 
 void Bullet::moveAll(float elapsedTime)
 {
-	vector<Bullet *> liveBullets;
-
 	// move all the bullets
-	for (Bullet * bullet : bulletList)
-	{
+	auto it = bulletList.begin();
+	while (it < bulletList.end() ){
+		Bullet * bullet = *it;
 		bullet->moveSprite(elapsedTime);
 		if (bullet->dead)
 		{
+			it = bulletList.erase(it);
 			delete bullet;
-		} 
+			cout << bulletList.size() << endl;
+		}
 		else
 		{
-			liveBullets.push_back(bullet);
+			it++;
 		}
-	}
-
-	bulletList.clear();
-	for (Bullet * bullet : liveBullets)
-	{
-		bulletList.push_back(bullet);
 	}
 
 }
