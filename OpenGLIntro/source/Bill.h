@@ -271,18 +271,25 @@ public:
 				bulletVelocity = vec2(bulletSpeed, 0);
 				break;
 			case STANDING_SHOOTING_UP:
-				bulletOffset = vec2(10, 25); // fix this <----
+				bulletOffset = vec2(2, 40); 
 				bulletVelocity = vec2(0, bulletSpeed);
 				break;
 			case RUNNING_SHOOTING_FORWARD:
-				// navarre do this bit
+				bulletOffset = vec2(10, 25);
+				bulletVelocity = vec2(bulletSpeed, 0);
 				break;
 			case RUNNING_SHOOTING_UP:
-				// navarre do this bit
+				bulletOffset = vec2(10, 36);
+				bulletVelocity = vec2(bulletSpeed, bulletSpeed / 2.5);
 				break;
 			case RUNNING_SHOOTING_DOWN:
-				// navarre do this bit
+				bulletOffset = vec2(10, 16);
+				bulletVelocity = vec2(bulletSpeed, -bulletSpeed / 2.5);
 				break;
+			case JUMPING:
+
+				break;
+
 			}
 
 
