@@ -221,7 +221,7 @@ public:
 
 		if (fireButton)
 		{
-			Bullet::shoot(position, vec2(30, 0));
+			Bullet::shoot(position + vec2(10,25), vec2(150, 0));
 		}
 	}
 
