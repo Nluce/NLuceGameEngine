@@ -16,9 +16,6 @@ public:
 	Bullet();
 	~Bullet();
 
-	void moveAll();
-
-	void drawAll();
 
 	int speed = 300;
 
@@ -28,6 +25,8 @@ public:
 	static Shape * bulletShape;
 
 	static void shoot(const vec2 & position, const vec2 & velocity);
+	static void moveAll(float elapsedTime);
+	static void drawAll(const mat4 & matrixIn, int matrixUniformID);
 
 	void init()
 	{

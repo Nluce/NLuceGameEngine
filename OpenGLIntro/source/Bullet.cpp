@@ -36,12 +36,16 @@ void Bullet::shoot(const vec2 & position, const vec2 & velocity)
 
 }
 
-void moveAll(const vec2 & position, const vec2 & velocity)
+void Bullet::moveAll(float elapsedTime)
 {
-
+	// move all the bullets
+	for (Bullet * bullet : bulletList)
+	{
+		bullet->moveSprite(elapsedTime);
+	}
 }
 
-void drawAll(const vec2 & position, const vec2 & velocity)
+void Bullet::drawAll(const mat4 & matrixIn, int matrixUniformID)
 {
-
+	// draw all the bullets
 }

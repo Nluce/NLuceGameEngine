@@ -129,6 +129,8 @@ int main()
 
 			// Input
 			contraDude.move(elapsedTime, window,time);
+
+			Bullet::moveAll(elapsedTime);
 		}
 		//draw code goes here
 		const float gameScale = SCREEN_WIDTH / mapWidth;
@@ -156,6 +158,9 @@ int main()
 			backgroundSprite.draw(world, shaderIDMVP);
 
 			contraDude.draw(world, shaderIDMVP);
+
+			Bullet::drawAll(world, shaderIDMVP);
+
 
 			char buffer[200];
 			
