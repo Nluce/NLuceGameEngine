@@ -16,6 +16,10 @@ public:
 	Bullet();
 	~Bullet();
 
+	void moveAll();
+
+	void drawAll();
+
 	int speed = 300;
 
 	bool dead = false;

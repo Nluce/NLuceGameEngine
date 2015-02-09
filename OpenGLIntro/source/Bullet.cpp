@@ -29,9 +29,19 @@ void Bullet::shoot(const vec2 & position, const vec2 & velocity)
 	Bullet * bullet = new Bullet();
 	bullet->position = position;
 	bullet->velocity = velocity;
+	
 
 	// add it to the list
 	bulletList.push_back(bullet);
 
 }
 
+void moveAll(const vec2 & position, const vec2 & velocity)
+{
+
+}
+
+void drawAll(const vec2 & position, const vec2 & velocity)
+{
+
+}

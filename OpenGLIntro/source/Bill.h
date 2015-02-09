@@ -218,6 +218,11 @@ public:
 		{
 			cerr << "Animation not set" << endl;
 		}
+
+		if (fireButton)
+		{
+			Bullet::shoot(position, vec2(30, 0));
+		}
 	}
 
 
