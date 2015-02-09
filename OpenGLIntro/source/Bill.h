@@ -60,6 +60,16 @@ public:
 
 	std::vector<Shape *> shapesToDelete;
 
+	enum Orientation {
+		STANDING,
+		STANDING_SHOOTING_UP,
+		PRONE,
+		RUNNING_SHOOTING_FORWARD,
+		RUNNING_SHOOTING_UP,
+		RUNNING_SHOOTING_DOWN,
+		JUMPING,
+	};
+
 	void move(float elapsedTime, GLFWwindow* window, float time)
 	{
 		bool jumpButton = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
@@ -181,23 +191,31 @@ public:
 		mirror = facingLeft;
 
 		Animation * animation;
+		Orientation orientation;
+
 
 		if (isJumping)
 		{
 			animation = &jumpAnimation;
+			orientation = JUMPING;
 		}
 		else if (isRunning)
 		{
 			if (upButton)
 			{
+				orientation = RUNNING_SHOOTING_UP;
+
 				animation = &runShootUp;
 			}
 			else if (downButton)
 			{
+				orientation = RUNNING_SHOOTING_DOWN;
 				animation = &runShootDown;
 			}
 			else
 			{
+				orientation = RUNNING_SHOOTING_FORWARD;
+
 				if (fireButton)
 				{
 					animation = &runShoot;
@@ -212,14 +230,17 @@ public:
 		{
 			if (upButton)
 			{
+				orientation = STANDING_SHOOTING_UP;
 				animation = &shootStraightUp;
 			}
 			else if (downButton)
 			{
+				orientation = PRONE;
 				animation = &layDown;
 			}
 			else
 			{
+				orientation = STANDING;
 				animation = &stand;
 			}
 		}
@@ -233,9 +254,44 @@ public:
 			cerr << "Animation not set" << endl;
 		}
 
-		if (fireButton && gunLoaded)
+		if (fireButton && gunLoaded && !isJumping)
 		{
-			Bullet::shoot(position + vec2(10,25), vec2(bulletSpeed, 0));
+			vec2 bulletOffset;
+			vec2 bulletVelocity;
+
+			switch (orientation)
+			{
+			default:
+			case STANDING:
+				bulletOffset = vec2(10, 25);
+				bulletVelocity = vec2(bulletSpeed, 0);
+				break;
+			case PRONE:
+				bulletOffset = vec2(10, 10);
+				bulletVelocity = vec2(bulletSpeed, 0);
+				break;
+			case STANDING_SHOOTING_UP:
+				bulletOffset = vec2(10, 25); // fix this <----
+				bulletVelocity = vec2(0, bulletSpeed);
+				break;
+			case RUNNING_SHOOTING_FORWARD:
+				// navarre do this bit
+				break;
+			case RUNNING_SHOOTING_UP:
+				// navarre do this bit
+				break;
+			case RUNNING_SHOOTING_DOWN:
+				// navarre do this bit
+				break;
+			}
+
+
+			if (facingLeft) {
+				bulletOffset.x *= -1;
+				bulletVelocity.x *= -1;
+			}
+
+			Bullet::shoot(position + bulletOffset, bulletVelocity);
 			gunLoaded = false;
 			reloadTime = 1.0 / fireRate;
 		}
