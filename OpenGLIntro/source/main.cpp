@@ -12,7 +12,7 @@
 #include "Sprite.h"
 #include "Bill.h"
 #include "Game.h"
-
+#include "Enemy.h"
 using namespace std;
 
 
@@ -102,6 +102,8 @@ int main()
 	Bill contraDude;
 	contraDude.setPosition(vec2(50, 50));
 
+	Enemy enemy1;
+	enemy1.Spawn(vec2(0,2122), vec2(0, 0));
 	
 
 	Sprite backgroundSprite;
@@ -161,7 +163,7 @@ int main()
 			contraDude.draw(world, shaderIDMVP);
 
 			Bullet::drawAll(world, shaderIDMVP);
-
+			Enemy::drawAll(world, shaderIDMVP);
 
 			char buffer[200];
 			
