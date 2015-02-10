@@ -8,6 +8,9 @@
 #include <iostream>
 #include "Animation.h"
 #include "Shape.h"
+#include <time.h>
+
+
 class Enemy :
 	public Sprite
 {
@@ -18,10 +21,10 @@ public:
 	bool dead = false;
 
 	static Texture * enemySpriteSheet;
-	Animation run;
+	static Animation run;
 	std::vector<Shape *> shapesToDelete;
 
-	void Enemy::Spawn(const vec2 & position, const vec2 & velocity);
+	static void Enemy::Spawn(const vec2 & position, const vec2 & velocity);
 	static void moveAll(float elapsedTime);
 	static void drawAll(const mat4 & matrixIn, int matrixUniformID);
 
@@ -34,25 +37,32 @@ public:
 	
 	void init()
 	{
-		enemySpriteSheet = new Texture("ContraEnemySheet.png");
-		enemySpriteSheet->filterNearest();
+		if (!enemySpriteSheet)
+		{
+			enemySpriteSheet = new Texture("ContraEnemySheet.png");
+			enemySpriteSheet->filterNearest();
 
-		run.addFrame(makeShape(154, 47, 17, 31));
-		run.addFrame(makeShape(174, 45, 18, 34));
-		run.addFrame(makeShape(195, 46, 20, 33));
-		run.addFrame(makeShape(218, 47, 16, 32));
-		run.addFrame(makeShape(237, 44, 19, 35));
-		run.addFrame(makeShape(260, 45, 20, 34));
+			run.addFrame(makeShape(154, 47, 17, 31));
+			run.addFrame(makeShape(174, 45, 18, 34));
+			run.addFrame(makeShape(195, 46, 20, 33));
+			run.addFrame(makeShape(218, 47, 16, 32));
+			run.addFrame(makeShape(237, 44, 19, 35));
+			run.addFrame(makeShape(260, 45, 20, 34));
+		}
 	}
 
 	void moveSprite(float elapsedTime)
 	{
+		float time = (float)(clock()) / CLOCKS_PER_SEC;
+
+		setShape(run.getCurrentFrame(time));
+
 		if (!dead)
 		{
 			position += velocity * elapsedTime;
 			// if (something were to kill this dude...)
 			{
-				dead = true;
+				//dead = true;
 			}
 		}
 

@@ -14,6 +14,7 @@ Enemy::~Enemy()
 vector<Enemy*> enemyList;
 
 Texture * Enemy::enemySpriteSheet = 0;
+Animation Enemy::run;
 
 
 void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
@@ -22,11 +23,7 @@ void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 	Enemy * enemy = new Enemy();
 	enemy->position = position;
 	enemy->velocity = velocity;
-
-
-	// add it to the list
-	enemyList.push_back(enemy);
-
+	enemy->dead = false;
 
 	// add it to the list
 	enemyList.push_back(enemy);

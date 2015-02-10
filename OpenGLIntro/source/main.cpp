@@ -102,8 +102,7 @@ int main()
 	Bill contraDude;
 	contraDude.setPosition(vec2(50, 50));
 
-	Enemy enemy1;
-	enemy1.Spawn(vec2(0,2122), vec2(0, 0));
+	Enemy::Spawn(vec2(100, 50), vec2(0, 0));
 	
 
 	Sprite backgroundSprite;
@@ -134,6 +133,7 @@ int main()
 			contraDude.move(elapsedTime, window,time);
 
 			Bullet::moveAll(elapsedTime);
+			Enemy::moveAll(elapsedTime);
 		}
 		//draw code goes here
 		const float gameScale = SCREEN_WIDTH / mapWidth;
