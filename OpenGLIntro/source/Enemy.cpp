@@ -20,13 +20,13 @@ Shape * Enemy::enemyShape = 0;
 void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 {
 	// make a new Enemy
-	Enemy * Enemy = new Enemy();
-	Enemy->position = position;
-	Enemy->velocity = velocity;
+	Enemy * enemy = new Enemy();
+	enemy->position = position;
+	enemy->velocity = velocity;
 
 
 	// add it to the list
-	enemyList.push_back(Enemy);
+	enemyList.push_back(enemy);
 
 
 
