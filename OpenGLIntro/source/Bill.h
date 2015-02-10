@@ -202,23 +202,23 @@ public:
 		if (isJumping)
 		{
 			animation = &jumpAnimation;
-			if (upButton && !rightButton)
+			if (upButton && !isRunning)
 			{
 				orientation = JUMPING_SHOOTING_UP;
 			}
-			else if (upButton &&rightButton)
+			else if (upButton &&isRunning)
 			{
 				orientation = JUMPING_SHOOTING_UP_FORWARD;
 			}
-			else if (downButton && rightButton)
+			else if (downButton && isRunning)
 			{
 				orientation = JUMPING_SHOOTING_DOWN_FORWARD;
 			}
-			else if (downButton && !rightButton)
+			else if (downButton && !isRunning)
 			{
 				orientation = JUMPING_SHOOTING_DOWN;
 			}
-			else if (!downButton && rightButton)
+			else
 			{
 				orientation = JUMPING_SHOOTING_FORWARD;
 			}
@@ -328,7 +328,7 @@ public:
 				break;
 			case JUMPING_SHOOTING_DOWN:
 				bulletOffset = vec2(10, 16);
-				bulletVelocity = vec2(-bulletSpeed, 0);
+				bulletVelocity = vec2(0, -bulletSpeed);
 				break;
 
 			}
