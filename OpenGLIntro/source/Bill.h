@@ -30,7 +30,7 @@ public:
 	float reloadTime;
 	double gravity = 250.0f;
 
-	int bulletSpeed = 150;
+	int bulletSpeed = 250;
 	int fireRate = 20; // fireRate is in shots per second
 
 	bool isJumping = false;
@@ -312,19 +312,19 @@ public:
 				break;
 			case JUMPING_SHOOTING_UP:
 				bulletOffset = vec2(0, 10);
-				bulletVelocity = vec2(velocity.x + 0, bulletSpeed / 2.5);
+				bulletVelocity = vec2(0, bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_UP_FORWARD:
 				bulletOffset = vec2(0, 10);
-				bulletVelocity = vec2(velocity.x + bulletSpeed,  bulletSpeed / 2.5);
+				bulletVelocity = vec2(bulletSpeed,  bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_FORWARD:
 				bulletOffset = vec2(0, 10);
-				bulletVelocity = vec2(velocity.x + bulletSpeed,  0);
+				bulletVelocity = vec2(bulletSpeed,  0);
 				break;
 			case JUMPING_SHOOTING_DOWN_FORWARD:
 				bulletOffset = vec2(0, 10);
-				bulletVelocity = vec2(velocity.x + bulletSpeed,  -bulletSpeed / 2.5);
+				bulletVelocity = vec2(bulletSpeed,  -bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_DOWN:
 				bulletOffset = vec2(0, 10);
