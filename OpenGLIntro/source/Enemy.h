@@ -45,6 +45,19 @@ public:
 		run.addFrame(makeShape(260, 45, 20, 34));
 	}
 
+	void moveSprite(float elapsedTime)
+	{
+		if (!dead)
+		{
+			position += velocity * elapsedTime;
+			// if (something were to kill this dude...)
+			{
+				dead = true;
+			}
+		}
+
+	}
+
 	
 };
 

@@ -14,7 +14,6 @@ Enemy::~Enemy()
 vector<Enemy*> enemyList;
 
 Texture * Enemy::enemySpriteSheet = 0;
-Shape * Enemy::enemyShape = 0;
 
 
 void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
@@ -23,6 +22,7 @@ void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 	Enemy * enemy = new Enemy();
 	enemy->position = position;
 	enemy->velocity = velocity;
+<<<<<<< HEAD
 
 
 	// add it to the list
@@ -30,6 +30,11 @@ void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 
 
 
+=======
+
+	// add it to the list
+	enemyList.push_back(enemy);
+>>>>>>> origin/master
 }
 
 void Enemy::moveAll(float elapsedTime)
