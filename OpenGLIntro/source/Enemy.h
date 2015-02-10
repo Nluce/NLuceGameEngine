@@ -21,13 +21,17 @@ public:
 	Animation run;
 	std::vector<Shape *> shapesToDelete;
 
+	void Enemy::Spawn(const vec2 & position, const vec2 & velocity);
+	static void moveAll(float elapsedTime);
+	static void drawAll(const mat4 & matrixIn, int matrixUniformID);
+
 	Shape * makeShape(int left, int top, int width, int height)
 	{
 		Shape * shape = new Shape(enemySpriteSheet, left, top, width, height, BOTTOM_CENTER, false);
 		shapesToDelete.push_back(shape);
 		return shape;
 	}
-
+	
 	void init()
 	{
 		enemySpriteSheet = new Texture("ContraEnemySheet.png");

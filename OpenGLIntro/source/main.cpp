@@ -100,7 +100,6 @@ int main()
 
 
 	Bill contraDude;
-	
 	contraDude.setPosition(vec2(50, 50));
 
 	
