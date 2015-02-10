@@ -311,24 +311,24 @@ public:
 				bulletVelocity = vec2(bulletSpeed, -bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_UP:
-				bulletOffset = vec2(10, 16);
-				bulletVelocity = vec2(0, bulletSpeed / 2.5);
+				bulletOffset = vec2(0, 10);
+				bulletVelocity = vec2(velocity.x + 0, bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_UP_FORWARD:
-				bulletOffset = vec2(10, 16);
-				bulletVelocity = vec2(bulletSpeed, bulletSpeed / 2.5);
+				bulletOffset = vec2(0, 10);
+				bulletVelocity = vec2(velocity.x + bulletSpeed,  bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_FORWARD:
-				bulletOffset = vec2(10, 16);
-				bulletVelocity = vec2(bulletSpeed, 0);
+				bulletOffset = vec2(0, 10);
+				bulletVelocity = vec2(velocity.x + bulletSpeed,  0);
 				break;
 			case JUMPING_SHOOTING_DOWN_FORWARD:
-				bulletOffset = vec2(10, 16);
-				bulletVelocity = vec2(bulletSpeed, -bulletSpeed / 2.5);
+				bulletOffset = vec2(0, 10);
+				bulletVelocity = vec2(velocity.x + bulletSpeed,  -bulletSpeed / 2.5);
 				break;
 			case JUMPING_SHOOTING_DOWN:
-				bulletOffset = vec2(10, 16);
-				bulletVelocity = vec2(0, -bulletSpeed);
+				bulletOffset = vec2(0, 10);
+				bulletVelocity = vec2(velocity.x + 0,  -bulletSpeed);
 				break;
 
 			}
