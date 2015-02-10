@@ -22,19 +22,14 @@ void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 	Enemy * enemy = new Enemy();
 	enemy->position = position;
 	enemy->velocity = velocity;
-<<<<<<< HEAD
 
 
 	// add it to the list
 	enemyList.push_back(enemy);
 
 
-
-=======
-
 	// add it to the list
 	enemyList.push_back(enemy);
->>>>>>> origin/master
 }
 
 void Enemy::moveAll(float elapsedTime)
