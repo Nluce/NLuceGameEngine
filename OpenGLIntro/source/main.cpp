@@ -69,6 +69,8 @@ int main()
 	const float mapWidth = 256;
 	
 	theGame.mapSize = vec2(backgroundTexture.getWidth(), backgroundTexture.getHeight());
+	theGame.map = new Map();
+
 	
 	Shape background(&backgroundTexture, BOTTOM_LEFT);
 
