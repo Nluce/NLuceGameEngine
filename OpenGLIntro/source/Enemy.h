@@ -18,11 +18,18 @@ public:
 	Enemy();
 	~Enemy();
 	int speed = 100;
+	double gravity = 250.0f;
 	bool dead = false;
-
+	bool isOnPlatform = false;
+	bool isDropping = true;
 	static Texture * enemySpriteSheet;
 	static Animation run;
 	std::vector<Shape *> shapesToDelete;
+	int speed = 100;
+	vec2 preMove;
+	vec2 postMove;
+
+	
 
 	static void Enemy::Spawn(const vec2 & position, const vec2 & velocity);
 	static void moveAll(float elapsedTime);
@@ -42,12 +49,33 @@ public:
 			enemySpriteSheet = new Texture("ContraEnemySheet.png");
 			enemySpriteSheet->filterNearest();
 
+			
+
 			run.addFrame(makeShape(154, 47, 17, 31));
 			run.addFrame(makeShape(174, 45, 18, 34));
 			run.addFrame(makeShape(195, 46, 20, 33));
 			run.addFrame(makeShape(218, 47, 16, 32));
 			run.addFrame(makeShape(237, 44, 19, 35));
 			run.addFrame(makeShape(260, 45, 20, 34));
+		}
+	}
+
+	void checkOnPlatform()
+	{
+		if (!isDropping)
+		{
+			for (vec3 platform : theGame.map->platformList)
+			{
+				if (preMove.x > platform.x && preMove.x < platform.z)
+				{
+					if (preMove.y >= platform.y && postMove.y < platform.y)
+					{
+						isOnPlatform = true;
+						velocity.y = 0;
+						position.y = platform.y;
+					}
+				}
+			}
 		}
 	}
 
@@ -59,8 +87,15 @@ public:
 
 		if (!dead)
 		{
+			velocity.y -= gravity * elapsedTime;
+			velocity.x = speed;
+
+			preMove = position;
+			postMove = preMove + velocity * elapsedTime;
+			checkOnPlatform();
 			position += velocity * elapsedTime;
 			// if (something were to kill this dude...)
+
 			{
 				//dead = true;
 			}
@@ -70,4 +105,5 @@ public:
 
 	
 };
+
 

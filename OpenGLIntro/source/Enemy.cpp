@@ -15,7 +15,8 @@ vector<Enemy*> enemyList;
 
 Texture * Enemy::enemySpriteSheet = 0;
 Animation Enemy::run;
-
+bool isDropping = false;
+bool isRunning = false;
 
 void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 {
