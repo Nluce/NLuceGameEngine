@@ -33,10 +33,6 @@ void Bullet::shoot(const vec2 & position, const vec2 & velocity)
 
 	// add it to the list
 	bulletList.push_back(bullet);
-
-
-	cout << bulletList.size() << endl;
-
 }
 
 void Bullet::moveAll(float elapsedTime)
@@ -50,7 +46,6 @@ void Bullet::moveAll(float elapsedTime)
 		{
 			it = bulletList.erase(it);
 			delete bullet;
-			cout << bulletList.size() << endl;
 		}
 		else
 		{

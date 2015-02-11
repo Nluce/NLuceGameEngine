@@ -35,21 +35,23 @@ class Shape
 	Vertex* vertices;
 	int numberOfVerticies;
 	GLuint uiVBO;
-	vec2 size;
-	vec2 center;
 	Texture* texture;
 	
-
-
+public:
+	float left;
+	float right;
+	float bottom;
+	float top;
+private:
 	void setVertexPositions(ShapeAlignment alignment, float width, float height)
 	{
 		float ha = alignment.x;
 		float va = alignment.y;
 
-		float left = -ha * width;
-		float right = left + width;
-		float bottom = -va * height;
-		float top = bottom + height;
+		left = -ha * width;
+		right = left + width;
+		bottom = -va * height;
+		top = bottom + height;
 
 		vertices[0].fPositions[0] = left;
 		vertices[0].fPositions[1] = bottom;

@@ -90,13 +90,65 @@ public:
 
 	}
 
+	float getLeft() const
+	{
+		if (shape) {
+			if (mirror) {
+				return position.x - shape->right;
+			}
+			else {
+				return position.x + shape->left;
+			}
+		}
+		return position.x;
+	}
+
+	float getRight() const
+	{
+		if (shape) {
+			if (mirror) {
+				return position.x - shape->left;
+			}
+			else {
+				return position.x + shape->right;
+			}
+		}
+		return position.x;
+	}
+
+	float getTop() const
+	{
+		if (shape) {		
+			return position.y + shape->top;
+		}
+		return position.y;
+	}
+
+	float getBottom() const
+	{
+		if (shape) {
+			return position.y + shape->bottom;
+		}
+		return position.y;
+	}
+
 	bool collidesWith(const Sprite & otherSprite)
 	{
-		// TODO: this is dirt simple collision detection...
-		// needs to be made better.
-		vec2 delta = position - otherSprite.position;
-		float l = length(delta);
-		return l < 30;
+		if (getRight() > otherSprite.getLeft()){
+			cout << 1 << endl;
+			if (otherSprite.getRight() > getLeft()){
+				cout << 2 << endl;
+				if (getBottom() < otherSprite.getTop()){
+					cout << 3 << endl;
+					if (otherSprite.getBottom() < getTop()){
+						cout << 4 << endl;
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 
