@@ -135,13 +135,9 @@ public:
 	bool collidesWith(const Sprite & otherSprite)
 	{
 		if (getRight() > otherSprite.getLeft()){
-			cout << 1 << endl;
 			if (otherSprite.getRight() > getLeft()){
-				cout << 2 << endl;
 				if (getBottom() < otherSprite.getTop()){
-					cout << 3 << endl;
 					if (otherSprite.getBottom() < getTop()){
-						cout << 4 << endl;
 						return true;
 					}
 				}
