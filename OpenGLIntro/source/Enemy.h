@@ -9,7 +9,7 @@
 #include "Animation.h"
 #include "Shape.h"
 #include <time.h>
-
+#include "Game.h"
 
 class Enemy :
 	public Sprite
@@ -21,17 +21,20 @@ public:
 	double gravity = 250.0f;
 	bool dead = false;
 	bool isOnPlatform = false;
-	bool isDropping = true;
+	bool isDropping = false;
+
 	static Texture * enemySpriteSheet;
 	static Animation run;
+	static vector<Enemy*> enemyList;
+
 	std::vector<Shape *> shapesToDelete;
-	int speed = 100;
+
 	vec2 preMove;
 	vec2 postMove;
 
 	
 
-	static void Enemy::Spawn(const vec2 & position, const vec2 & velocity);
+	static Enemy * Enemy::Spawn(const vec2 & position, const vec2 & velocity);
 	static void moveAll(float elapsedTime);
 	static void drawAll(const mat4 & matrixIn, int matrixUniformID);
 
@@ -48,8 +51,6 @@ public:
 		{
 			enemySpriteSheet = new Texture("ContraEnemySheet.png");
 			enemySpriteSheet->filterNearest();
-
-			
 
 			run.addFrame(makeShape(154, 47, 17, 31));
 			run.addFrame(makeShape(174, 45, 18, 34));
@@ -88,11 +89,26 @@ public:
 		if (!dead)
 		{
 			velocity.y -= gravity * elapsedTime;
-			velocity.x = speed;
+
+			if (position.x > theGame.mapSize.x) {
+				mirror = true;
+			}
+			else if (position.x < 0) {
+				mirror = false;
+			}
+
+			velocity.x = mirror ? -speed : speed;
 
 			preMove = position;
 			postMove = preMove + velocity * elapsedTime;
 			checkOnPlatform();
+
+			if (position.y < 0)
+			{
+				// on ground
+				position.y = 0;
+				velocity.y = 0;
+			}
 			position += velocity * elapsedTime;
 			// if (something were to kill this dude...)
 

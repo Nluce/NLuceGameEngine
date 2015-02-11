@@ -114,6 +114,9 @@ int main()
 
 	float cameraHeight = 0;
 
+	float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
+
+	float lastSpawn = time;
 
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
@@ -121,9 +124,20 @@ int main()
 
 		// game physics
 		{
-			highScore += 10;
 
-			float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
+			if (time - lastSpawn > 1)
+			{
+				float x = rand() % int(theGame.mapSize.x);
+				float y = contraDude.position.y + 100;
+				Enemy * e = Enemy::Spawn(vec2(x, y), vec2());
+				if (rand() & 1){
+					e->mirror = true;
+				}
+				lastSpawn += 1;
+			}
+
+
+			time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
 
 			float elapsedTime = time - lastTime;
 			lastTime = time;
@@ -134,6 +148,52 @@ int main()
 
 			Bullet::moveAll(elapsedTime);
 			Enemy::moveAll(elapsedTime);
+
+
+			{
+				// check to see if any bullets hit any enemies
+				auto it = Enemy::enemyList.begin();
+				while (it < Enemy::enemyList.end()){
+					Enemy * enemy = *it;
+
+					auto it2 = Bullet::bulletList.begin();
+					while (it2 < Bullet::bulletList.end()){
+						Bullet * bullet = *it2;
+
+						if (bullet->collidesWith(*enemy))
+						{
+							bullet->dead = true;
+							enemy->dead = true;
+							highScore++;
+						}
+
+						if (bullet->dead)
+						{
+							it2 = Bullet::bulletList.erase(it2);
+							delete bullet;
+
+						}
+						else
+						{
+							it2++;
+						}
+
+					}
+
+
+					if (enemy->dead)
+					{
+						it = Enemy::enemyList.erase(it);
+						delete enemy;
+					}
+					else
+					{
+						it++;
+					}
+				}
+
+			}
+
 		}
 		//draw code goes here
 		const float gameScale = SCREEN_WIDTH / mapWidth;
@@ -164,6 +224,8 @@ int main()
 
 			Bullet::drawAll(world, shaderIDMVP);
 			Enemy::drawAll(world, shaderIDMVP);
+
+
 
 			char buffer[200];
 			

@@ -15,7 +15,7 @@ Bullet::~Bullet()
 }
 
 
-vector<Bullet *> bulletList;
+vector<Bullet *> Bullet::bulletList;
 
 
 

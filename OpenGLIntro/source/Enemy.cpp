@@ -11,14 +11,14 @@ Enemy::~Enemy()
 {
 }
 
-vector<Enemy*> enemyList;
+vector<Enemy*> Enemy::enemyList;
 
 Texture * Enemy::enemySpriteSheet = 0;
 Animation Enemy::run;
 bool isDropping = false;
 bool isRunning = false;
 
-void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
+Enemy * Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 {
 	// make a new Enemy
 	Enemy * enemy = new Enemy();
@@ -28,19 +28,28 @@ void Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 
 	// add it to the list
 	enemyList.push_back(enemy);
+
+	return enemy;
 }
 
 void Enemy::moveAll(float elapsedTime)
 {
+	//cout << enemyList.size() << endl;
+
 	// move all the Enemys
 	auto it = enemyList.begin();
 	while (it < enemyList.end()){
-		Enemy * Enemy = *it;
-		Enemy->moveSprite(elapsedTime);
-		if (Enemy->dead)
+		Enemy * enemy = *it;
+		enemy->moveSprite(elapsedTime);
+
+		if (enemyList.size() > 20)
+		{
+			enemy->dead = true;
+		}
+		if (enemy->dead)
 		{
 			it = enemyList.erase(it);
-			delete Enemy;
+			delete enemy;
 		
 		}
 		else

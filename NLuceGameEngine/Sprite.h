@@ -23,9 +23,9 @@ class Sprite
 protected:
 	float rotation; // around z axis
 	Shape * shape;
-	bool mirror;
 
 public:
+	bool mirror;
 	Sprite();
 	virtual ~Sprite();
 
@@ -67,8 +67,6 @@ public:
 		{
 			mat4 out = matrixIn;
 
-
-
 			// then we move it to where we want it centered on the screen
 			out = translate(out, vec3(position.x, position.y, 0.0f));
 
@@ -90,6 +88,15 @@ public:
 			cerr << "No shape to draw" << endl;
 		}
 
+	}
+
+	bool collidesWith(const Sprite & otherSprite)
+	{
+		// TODO: this is dirt simple collision detection...
+		// needs to be made better.
+		vec2 delta = position - otherSprite.position;
+		float l = length(delta);
+		return l < 30;
 	}
 
 

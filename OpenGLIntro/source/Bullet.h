@@ -23,6 +23,7 @@ public:
 
 	static Texture * bulletSpriteSheet;
 	static Shape * bulletShape;
+	static vector<Bullet *> bulletList;
 
 	static void shoot(const vec2 & position, const vec2 & velocity);
 	static void moveAll(float elapsedTime);
