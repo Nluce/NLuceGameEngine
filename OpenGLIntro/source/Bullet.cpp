@@ -35,13 +35,13 @@ void Bullet::shoot(const vec2 & position, const vec2 & velocity)
 	bulletList.push_back(bullet);
 }
 
-void Bullet::moveAll(float elapsedTime)
+void Bullet::moveAll()
 {
 	// move all the bullets
 	auto it = bulletList.begin();
 	while (it < bulletList.end() ){
 		Bullet * bullet = *it;
-		bullet->moveSprite(elapsedTime);
+		bullet->moveSprite();
 		if (bullet->dead)
 		{
 			it = bulletList.erase(it);

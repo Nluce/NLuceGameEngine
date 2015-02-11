@@ -114,18 +114,19 @@ int main()
 
 	float cameraHeight = 0;
 
-	float time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
+	theGame.startLevel();
 
-	float lastSpawn = time;
+	float lastSpawn = theGame.time;
 
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
 	{
+		theGame.startFrame();
 
 		// game physics
 		{
 
-			if (time - lastSpawn > 1)
+			if (theGame.time - lastSpawn > 1)
 			{
 				float x = rand() % int(theGame.mapSize.x);
 				float y = contraDude.position.y + 100;
@@ -137,28 +138,22 @@ int main()
 			}
 
 
-			time = (float)(clock() - start_time) / CLOCKS_PER_SEC;
-
-			float elapsedTime = time - lastTime;
-			lastTime = time;
-
-
 			// Input
-			contraDude.move(elapsedTime, window,time);
+			contraDude.move(window);
 
-			Bullet::moveAll(elapsedTime);
-			Enemy::moveAll(elapsedTime);
+			Bullet::moveAll();
+			Enemy::moveAll();
 
 
 			{
-				// check to see if any bullets hit any enemies
-				auto it = Enemy::enemyList.begin();
-				while (it < Enemy::enemyList.end()){
-					Enemy * enemy = *it;
 
-					auto it2 = Bullet::bulletList.begin();
-					while (it2 < Bullet::bulletList.end()){
-						Bullet * bullet = *it2;
+				auto it2 = Bullet::bulletList.begin();
+				while (it2 < Bullet::bulletList.end()){
+					Bullet * bullet = *it2;
+
+					auto it = Enemy::enemyList.begin();
+					while (it < Enemy::enemyList.end()){
+						Enemy * enemy = *it;
 
 						if (bullet->collidesWith(*enemy))
 						{
@@ -167,30 +162,31 @@ int main()
 							highScore++;
 						}
 
-						if (bullet->dead)
+						if (enemy->dead)
 						{
-							it2 = Bullet::bulletList.erase(it2);
-							delete bullet;
-
+							it = Enemy::enemyList.erase(it);
+							delete enemy;
 						}
 						else
 						{
-							it2++;
+							it++;
 						}
-
 					}
 
-
-					if (enemy->dead)
+					if (bullet->dead)
 					{
-						it = Enemy::enemyList.erase(it);
-						delete enemy;
+						it2 = Bullet::bulletList.erase(it2);
+						delete bullet;
+
 					}
 					else
 					{
-						it++;
+						it2++;
 					}
+
 				}
+
+				// check to see if any bullets hit any enemies
 
 			}
 

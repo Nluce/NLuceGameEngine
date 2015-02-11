@@ -26,7 +26,7 @@ public:
 	static vector<Bullet *> bulletList;
 
 	static void shoot(const vec2 & position, const vec2 & velocity);
-	static void moveAll(float elapsedTime);
+	static void moveAll();
 	static void drawAll(const mat4 & matrixIn, int matrixUniformID);
 
 	void init()
@@ -41,11 +41,11 @@ public:
 	}
 
 
-	void moveSprite(float elapsedTime)
+	void moveSprite()
 	{
 		if (!dead)
 		{
-			position += velocity * elapsedTime;
+			position += velocity * theGame.elapsedTime;
 			if (position.x < 0 || position.y < 0 || position.x > theGame.mapSize.x || position.y > theGame.mapSize.y)
 			{
 				dead = true;

@@ -73,7 +73,7 @@ public:
 		JUMPING_SHOOTING_DOWN
 	};
 
-	void move(float elapsedTime, GLFWwindow* window, float time)
+	void move(GLFWwindow* window)
 	{
 		bool jumpButton = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS;
 		bool leftButton = glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS;
@@ -88,7 +88,7 @@ public:
 		
 		if (reloadTime > 0)
 		{
-			reloadTime -= elapsedTime;
+			reloadTime -= theGame.elapsedTime;
 		}
 		else
 		{
@@ -137,7 +137,7 @@ public:
 			}
 		}
 
-		velocity.y -= gravity * elapsedTime;
+		velocity.y -= gravity * theGame.elapsedTime;
 
 		if (position.y < 0)
 		{
@@ -152,7 +152,7 @@ public:
 		}
 
 		preMove = position;
-		postMove = preMove + velocity * elapsedTime;
+		postMove = preMove + velocity * theGame.elapsedTime;
 
 		isOnPlatform = false;
 
@@ -189,7 +189,7 @@ public:
 			position.x = 252;
 		}
 
-		position += velocity * elapsedTime;
+		position += velocity * theGame.elapsedTime;
 
 		//cout << velocity.y << endl;
 		
@@ -271,7 +271,7 @@ public:
 		
 		if (animation)
 		{
-			setShape(animation->getCurrentFrame(time));
+			setShape(animation->getCurrentFrame(theGame.time));
 		}
 		else
 		{

@@ -35,7 +35,7 @@ public:
 	
 
 	static Enemy * Enemy::Spawn(const vec2 & position, const vec2 & velocity);
-	static void moveAll(float elapsedTime);
+	static void moveAll();
 	static void drawAll(const mat4 & matrixIn, int matrixUniformID);
 
 	Shape * makeShape(int left, int top, int width, int height)
@@ -80,27 +80,27 @@ public:
 		}
 	}
 
-	void moveSprite(float elapsedTime)
+	void moveSprite()
 	{
-		float time = (float)(clock()) / CLOCKS_PER_SEC;
 
-		setShape(run.getCurrentFrame(time));
+		setShape(run.getCurrentFrame(theGame.time));
 
 		if (!dead)
 		{
-			velocity.y -= gravity * elapsedTime;
+			static const int edge = 10;
+			velocity.y -= gravity * theGame.elapsedTime;
 
-			if (position.x > theGame.mapSize.x) {
+			if (position.x > theGame.mapSize.x - edge) {
 				mirror = true;
 			}
-			else if (position.x < 0) {
+			else if (position.x < 0 + edge) {
 				mirror = false;
 			}
 
 			velocity.x = mirror ? -speed : speed;
 
 			preMove = position;
-			postMove = preMove + velocity * elapsedTime;
+			postMove = preMove + velocity * theGame.elapsedTime;
 			checkOnPlatform();
 
 			if (position.y < 0)
@@ -109,7 +109,7 @@ public:
 				position.y = 0;
 				velocity.y = 0;
 			}
-			position += velocity * elapsedTime;
+			position += velocity * theGame.elapsedTime;
 			// if (something were to kill this dude...)
 
 			{

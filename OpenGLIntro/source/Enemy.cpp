@@ -32,7 +32,7 @@ Enemy * Enemy::Spawn(const vec2 & position, const vec2 & velocity)
 	return enemy;
 }
 
-void Enemy::moveAll(float elapsedTime)
+void Enemy::moveAll()
 {
 	//cout << enemyList.size() << endl;
 
@@ -40,7 +40,7 @@ void Enemy::moveAll(float elapsedTime)
 	auto it = enemyList.begin();
 	while (it < enemyList.end()){
 		Enemy * enemy = *it;
-		enemy->moveSprite(elapsedTime);
+		enemy->moveSprite();
 
 		if (enemyList.size() > 20)
 		{
