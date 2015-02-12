@@ -75,11 +75,10 @@ int main()
 	Shape background(&backgroundTexture, BOTTOM_LEFT);
 
 	Texture titleTexture("Title.png");
+	titleTexture.filterNearest();
 	Shape titleShape(&titleTexture, CENTER);
 	Sprite titleSprite;
-	titleSprite.setPosition(vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
 	titleSprite.setShape(&titleShape);
-
 
 
 	//create shader program
@@ -90,23 +89,26 @@ int main()
 	//find the position of the matrix variable in the shader so we can send info there later
 	GLuint shaderIDMVP = glGetUniformLocation(uiProgramColorTexture, "MVP");
 
-	glm::mat4 screen = glm::ortho(0.0f, (float)SCREEN_WIDTH, 0.0f, (float)SCREEN_HEIGHT);
+	float centerX = SCREEN_WIDTH / 2;
+	float centerY = SCREEN_HEIGHT / 2;
+
+	// screen is with origin at lower left (y is up)
+	mat4 screen = glm::ortho(0.0f, (float)SCREEN_WIDTH, 0.0f, (float)SCREEN_HEIGHT);
+
+	// screenCentered is with origin at center (y is up)
+	mat4 screenCentered = glm::ortho(-centerX, centerX, -centerY, centerY);
+
+	// screenCenteredx2 is centered and scaled up by 2
+	mat4 screenCenteredx2 = scale(screenCentered, vec3(2, 2, 1));
+
 
 	// set up blending so that the texture can have treanspeanancy...
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	clock_t start_time = clock();
-
-	glm::vec3 zAxis(0, 0, 1);
-
-	float centerX = SCREEN_WIDTH / 2;
-	float centerY = SCREEN_HEIGHT / 2;
-
 	Bill contraDude;
 	contraDude.setPosition(vec2(50, 50));
 	
-
 	Sprite backgroundSprite;
 	backgroundSprite.setShape(&background);
 	backgroundSprite.setPosition(vec2(0, 0));
@@ -232,11 +234,12 @@ int main()
 			//swap front and back buffers
 
 			{
+				// draw the title graphic
 				static const float fadeIn = 1;
-				static const float hold = 3;
+				static const float hold = 4;
 				static const float fadeOut = 1;
 				static const float totalTime = fadeIn + hold + fadeOut;
-				static const float moveDistance = 500;
+				static const float moveDistance = 250;
 
 				if (theGame.time < totalTime)
 				{
@@ -250,11 +253,10 @@ int main()
 						offset = -(theGame.time - (fadeIn + hold)) / fadeOut;
 					}
 
-					titleSprite.setRotation(offset * 2);
-					titleSprite.setPosition(vec2(centerX, centerY + offset * moveDistance));
+					titleSprite.setRotation(offset * 3);
+					titleSprite.setPosition(vec2(0, offset * moveDistance));
 
-					//titleSprite.setRotation(theGame.time);
-					titleSprite.draw(screen, shaderIDMVP);
+					titleSprite.draw(screenCenteredx2, shaderIDMVP);
 				}
 			}
 
