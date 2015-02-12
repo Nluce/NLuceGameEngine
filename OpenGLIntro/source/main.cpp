@@ -74,6 +74,12 @@ int main()
 	
 	Shape background(&backgroundTexture, BOTTOM_LEFT);
 
+	Texture titleTexture("Title.png");
+	Shape titleShape(&titleTexture, CENTER);
+	Sprite titleSprite;
+	titleSprite.setPosition(vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
+	titleSprite.setShape(&titleShape);
+
 
 
 	//create shader program
@@ -97,12 +103,8 @@ int main()
 	float centerX = SCREEN_WIDTH / 2;
 	float centerY = SCREEN_HEIGHT / 2;
 
-
-
 	Bill contraDude;
 	contraDude.setPosition(vec2(50, 50));
-
-	Enemy::Spawn(vec2(100, 50), vec2(0, 0));
 	
 
 	Sprite backgroundSprite;
@@ -116,7 +118,7 @@ int main()
 
 	theGame.startLevel();
 
-	float lastSpawn = theGame.time;
+	float lastSpawn = 5;
 
 	//loop until the user closes the window
 	while (!glfwWindowShouldClose(window))
@@ -221,8 +223,6 @@ int main()
 			Bullet::drawAll(world, shaderIDMVP);
 			Enemy::drawAll(world, shaderIDMVP);
 
-
-
 			char buffer[200];
 			
 			sprintf_s(buffer, "HIGH SCORE %d", highScore);
@@ -230,6 +230,34 @@ int main()
 			font.drawString(screen, shaderIDMVP, buffer, 50, 150);
 			//font.drawString(screen, shaderIDMVP, "MORE TEXT", 50, 100);
 			//swap front and back buffers
+
+			{
+				static const float fadeIn = 1;
+				static const float hold = 3;
+				static const float fadeOut = 1;
+				static const float totalTime = fadeIn + hold + fadeOut;
+				static const float moveDistance = 500;
+
+				if (theGame.time < totalTime)
+				{
+					float offset = 0;
+					if (theGame.time <= fadeIn)
+					{
+						offset = (fadeIn - theGame.time) / fadeIn;
+					}
+					else if (theGame.time >= fadeIn + hold)
+					{
+						offset = -(theGame.time - (fadeIn + hold)) / fadeOut;
+					}
+
+					titleSprite.setRotation(offset * 2);
+					titleSprite.setPosition(vec2(centerX, centerY + offset * moveDistance));
+
+					//titleSprite.setRotation(theGame.time);
+					titleSprite.draw(screen, shaderIDMVP);
+				}
+			}
+
 			glfwSwapBuffers(window);
 		}
 
