@@ -116,7 +116,7 @@ int main()
 	int highScore = 0;
 	float lastTime = 0;
 
-	float cameraHeight = 0;
+	float cameraHeight = 96;
 
 	theGame.startLevel();
 
@@ -130,10 +130,11 @@ int main()
 		// game physics
 		{
 
+			// spawn enemies
 			if (theGame.time - lastSpawn > 1)
 			{
 				float x = rand() % int(theGame.mapSize.x);
-				float y = contraDude.position.y + 100;
+				float y = contraDude.position.y + 150;
 				Enemy * e = Enemy::Spawn(vec2(x, y), vec2());
 				if (rand() & 1){
 					e->mirror = true;
@@ -142,23 +143,31 @@ int main()
 			}
 
 
-			// Input
+			// move the dude
 			contraDude.move(window);
+			Enemy::playerPosition = contraDude.position;
 
+			// move the bullets
 			Bullet::moveAll();
+
+			// move the enemies
 			Enemy::moveAll();
 
 
 			{
+				// check to see if any bullets hit any enemies
 
+				// loop through all the bullets with an iterator
 				auto it2 = Bullet::bulletList.begin();
 				while (it2 < Bullet::bulletList.end()){
 					Bullet * bullet = *it2;
 
+					// loop through all the enemies with an iterator
 					auto it = Enemy::enemyList.begin();
 					while (it < Enemy::enemyList.end()){
 						Enemy * enemy = *it;
 
+						// this is where we check to see if the bullet hit the enemy
 						if (bullet->collidesWith(*enemy))
 						{
 							bullet->dead = true;
@@ -190,7 +199,6 @@ int main()
 
 				}
 
-				// check to see if any bullets hit any enemies
 
 			}
 
@@ -204,6 +212,8 @@ int main()
 		//if (contraDude.position.y > cameraHeight)
 		{
 			cameraHeight = contraDude.position.y;
+			if (cameraHeight < 96) cameraHeight = 96;
+			//cout << cameraHeight << endl;
 		}
 
 		world = translate(world, vec3(0, centerY, 0)); // center on screen

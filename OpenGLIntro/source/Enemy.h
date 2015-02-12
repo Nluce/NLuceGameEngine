@@ -17,15 +17,20 @@ class Enemy :
 public:
 	Enemy();
 	~Enemy();
-	int speed = 100;
+	int speed = 50;
 	double gravity = 250.0f;
 	bool dead = false;
 	bool isOnPlatform = false;
 	bool isDropping = false;
+	int jumpSpeed = 140;
+	float lastJumpTime = 0;
+
 
 	static Texture * enemySpriteSheet;
 	static Animation run;
+	static Animation jump;
 	static vector<Enemy*> enemyList;
+	static vec2 playerPosition;
 
 	std::vector<Shape *> shapesToDelete;
 
@@ -58,6 +63,12 @@ public:
 			run.addFrame(makeShape(218, 47, 16, 32));
 			run.addFrame(makeShape(237, 44, 19, 35));
 			run.addFrame(makeShape(260, 45, 20, 34));
+
+			jump.addFrame(makeShape(237, 44, 19, 35));
+			jump.addFrame(makeShape(260, 45, 20, 34));
+
+			jump.framesPerSecond = 4;
+
 		}
 	}
 
@@ -83,7 +94,6 @@ public:
 	void moveSprite()
 	{
 
-		setShape(run.getCurrentFrame(theGame.time));
 
 		if (!dead)
 		{
@@ -101,7 +111,20 @@ public:
 
 			preMove = position;
 			postMove = preMove + velocity * theGame.elapsedTime;
+			isOnPlatform = false;
 			checkOnPlatform();
+
+			if (isOnPlatform){
+				if (position.y < playerPosition.y){
+					if (theGame.time - lastJumpTime > 1)
+					{
+						velocity.y = jumpSpeed;
+					}
+				}
+			}
+			else {
+				lastJumpTime = theGame.time;
+			}
 
 			if (position.y < 0)
 			{
@@ -115,6 +138,14 @@ public:
 			{
 				//dead = true;
 			}
+
+			if (isOnPlatform){
+				setShape(run.getCurrentFrame(theGame.time));
+			}
+			else {
+				setShape(jump.getCurrentFrame(theGame.time));
+			}
+
 		}
 
 	}

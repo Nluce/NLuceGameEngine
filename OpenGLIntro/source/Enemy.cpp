@@ -12,9 +12,10 @@ Enemy::~Enemy()
 }
 
 vector<Enemy*> Enemy::enemyList;
-
+vec2 Enemy::playerPosition;
 Texture * Enemy::enemySpriteSheet = 0;
 Animation Enemy::run;
+Animation Enemy::jump;
 bool isDropping = false;
 bool isRunning = false;
 
